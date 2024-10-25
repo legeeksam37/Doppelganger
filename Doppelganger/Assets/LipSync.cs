@@ -7,10 +7,16 @@ public class LipSync : MonoBehaviour
     public AudioSource audioSource;
     private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private SkinnedMeshRenderer teethMeshRenderer;
-    private int jawOpenBlendshapeIndex = 0; // Indice du blendshape pour la bouche ouverte
-    public int mutliplicatorAmplitude;
-    private float[] audioSamples = new float[256];
+    private int jawOpenBlendshapeIndex = 0; 
+    private int teethOpenBlendshapeIndex = 1;
+    public int mutliplicatorAmplitudeMouth;
+    public int mutliplicatorAmplitudeTeeth;
 
+#if UNITY_WEBGL
+    private float[] audioSpectrum = new float[256];
+#else
+    private float[] audioSamples = new float[256];
+#endif
     void Start()
     {
         // Accéder au Skinned Mesh Renderer
@@ -31,26 +37,36 @@ public class LipSync : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            skinnedMeshRenderer.SetBlendShapeWeight(1,0.2f); // Sourire si le son est fort
-        }
+        /* if (Input.GetKeyDown(KeyCode.T))
+         {
+             skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex,0.2f); // Sourire si le son est fort
+         }*/
 
-        // Obtenir les données spectrales de l'audio
+#if UNITY_WEBGL
+        audioSource.GetSpectrumData(audioSpectrum, 0, FFTWindow.Rectangular);
+
+        float averageAmplitude = 0f;
+        foreach (float spectrumValue in audioSpectrum)
+        {
+            averageAmplitude += Mathf.Abs(spectrumValue);
+        }
+        averageAmplitude /= audioSpectrum.Length;
+
+#else
         audioSource.GetOutputData(audioSamples, 0);
 
-        // Calculer l'amplitude moyenne
         float averageAmplitude = 0f;
         foreach (float sample in audioSamples)
         {
             averageAmplitude += Mathf.Abs(sample);
         }
         averageAmplitude /= audioSamples.Length;
+#endif
 
-        // Mapper l'amplitude à un mouvement de la bouche
-        float jawWeight = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitude, 0, 1);
-        float jawWeightTeeth = Mathf.Clamp(averageAmplitude * 1000, 0, 0.5f);// Ajuste le multiplicateur selon le volume audio
+        float jawWeight = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitudeMouth, 0, 1);
         skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeight);
+
+        float jawWeightTeeth = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitudeTeeth, 0, 0.5f);// Ajuste le multiplicateur selon le volume audio
         teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeightTeeth);
     }
 }
