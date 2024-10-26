@@ -1774,6 +1774,8 @@ MonoBehaviour:
   teethMeshRenderer: {fileID: 984403296}
   mutliplicatorAmplitudeMouth: 0
   mutliplicatorAmplitudeTeeth: 0
+  lipSyncSpeed: 0
+  moveTeeth: 0
 --- !u!137 &1000506254 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1900177679484785314, guid: 3cb94ff40f012bb4ab10324a45fe5080, type: 3}
@@ -4037,6 +4039,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258262446637474187, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4104656639640713735, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.2
@@ -4077,9 +4087,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4191207255538645691, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4237544810842651829, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_Name
       value: Doppelganger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847330215174560693, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847330215174560693, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: lipSyncSpeed
+      value: 5.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

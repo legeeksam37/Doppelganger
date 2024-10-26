@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class LipSync : MonoBehaviour
     private int teethOpenBlendshapeIndex = 1;
     public int mutliplicatorAmplitudeMouth;
     public int mutliplicatorAmplitudeTeeth;
+    public float lipSyncSpeed; 
+    public bool moveTeeth;
+    bool hasTalked;
 
 #if UNITY_WEBGL
     private float[] audioSpectrum = new float[256];
@@ -32,15 +36,20 @@ public class LipSync : MonoBehaviour
         {
             Debug.LogError("teethMeshRenderer non assigné !");
         }
+
+        hasTalked = false;
     }
 
+    float openAmountMouth;
+    float openAmountTeeth;
+    
     void Update()
     {
 
         /* if (Input.GetKeyDown(KeyCode.T))
          {
              skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex,0.2f); // Sourire si le son est fort
-         }*/
+         }
 
 #if UNITY_WEBGL
         audioSource.GetSpectrumData(audioSpectrum, 0, FFTWindow.Rectangular);
@@ -67,7 +76,36 @@ public class LipSync : MonoBehaviour
         skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeight);
 
         float jawWeightTeeth = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitudeTeeth, 0, 0.5f);// Ajuste le multiplicateur selon le volume audio
-        teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeightTeeth);
+        teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeightTeeth);*/
+
+
+
+        if (!hasTalked)
+        {
+            
+            openAmountMouth = Mathf.PingPong(Time.time * lipSyncSpeed, 1f);
+            openAmountTeeth = openAmountMouth / 2;
+
+            Debug.Log("amount : " + openAmountMouth);
+            Debug.Log("amount Teeth : " + openAmountTeeth);
+
+            skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, openAmountMouth);
+            teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, openAmountTeeth);
+         //   hasTalked = true;
+        }
+
+        //if (hasTalked)
+        //{
+        //    skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
+        //    skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
+        //    hasTalked = false;
+        //}
     }
+
+    IEnumerator MoveLips()
+    {
+        yield return new WaitForSeconds(1.0f);
+    }
+
 }
 
