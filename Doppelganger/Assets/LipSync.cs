@@ -5,22 +5,20 @@ using UnityEngine;
 
 public class LipSync : MonoBehaviour
 {
-    public AudioSource audioSource;
-    private SkinnedMeshRenderer skinnedMeshRenderer;
-    [SerializeField] private SkinnedMeshRenderer teethMeshRenderer;
-    private int jawOpenBlendshapeIndex = 0; 
-    private int teethOpenBlendshapeIndex = 1;
-    public int mutliplicatorAmplitudeMouth;
-    public int mutliplicatorAmplitudeTeeth;
-    public float lipSyncSpeed; 
-    public bool moveTeeth;
-    bool hasTalked;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] SkinnedMeshRenderer teethMeshRenderer;
+    [SerializeField] float randomizeInterval = 2.0f;
+    [SerializeField] bool talk;
+    [SerializeField] float lipSyncSpeed;
 
-#if UNITY_WEBGL
-    private float[] audioSpectrum = new float[256];
-#else
-    private float[] audioSamples = new float[256];
-#endif
+    SkinnedMeshRenderer skinnedMeshRenderer;
+    int jawOpenBlendshapeIndex = 0; 
+    int smileIndex = 1;
+    float currentMaxJawOpenValue;
+    float lastRandomizeTime;
+    float openAmountMouth;
+    float openAmountTeeth;
+
     void Start()
     {
         // Accéder au Skinned Mesh Renderer
@@ -37,53 +35,28 @@ public class LipSync : MonoBehaviour
             Debug.LogError("teethMeshRenderer non assigné !");
         }
 
-        hasTalked = false;
+        talk = false;
     }
 
-    float openAmountMouth;
-    float openAmountTeeth;
+
     
     void Update()
     {
-
-        /* if (Input.GetKeyDown(KeyCode.T))
-         {
-             skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex,0.2f); // Sourire si le son est fort
-         }
-
-#if UNITY_WEBGL
-        audioSource.GetSpectrumData(audioSpectrum, 0, FFTWindow.Rectangular);
-
-        float averageAmplitude = 0f;
-        foreach (float spectrumValue in audioSpectrum)
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            averageAmplitude += Mathf.Abs(spectrumValue);
+            talk = !talk;
         }
-        averageAmplitude /= audioSpectrum.Length;
 
-#else
-        audioSource.GetOutputData(audioSamples, 0);
-
-        float averageAmplitude = 0f;
-        foreach (float sample in audioSamples)
+        if (talk)
         {
-            averageAmplitude += Mathf.Abs(sample);
-        }
-        averageAmplitude /= audioSamples.Length;
-#endif
+            // Randomiser la valeur maximale d'ouverture toutes les `randomizeInterval` secondes
+            if (Time.time - lastRandomizeTime >= randomizeInterval)
+            {
+                RandomizeJawOpenValue();
+                lastRandomizeTime = Time.time;
+            }
 
-        float jawWeight = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitudeMouth, 0, 1);
-        skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeight);
-
-        float jawWeightTeeth = Mathf.Clamp(averageAmplitude * mutliplicatorAmplitudeTeeth, 0, 0.5f);// Ajuste le multiplicateur selon le volume audio
-        teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, jawWeightTeeth);*/
-
-
-
-        if (!hasTalked)
-        {
-            
-            openAmountMouth = Mathf.PingPong(Time.time * lipSyncSpeed, 1f);
+            openAmountMouth = Mathf.PingPong(Time.time * (1f / lipSyncSpeed), currentMaxJawOpenValue);
             openAmountTeeth = openAmountMouth / 2;
 
             Debug.Log("amount : " + openAmountMouth);
@@ -91,21 +64,18 @@ public class LipSync : MonoBehaviour
 
             skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, openAmountMouth);
             teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, openAmountTeeth);
-         //   hasTalked = true;
         }
-
-        //if (hasTalked)
-        //{
-        //    skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
-        //    skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
-        //    hasTalked = false;
-        //}
+        else
+        {
+            skinnedMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
+            teethMeshRenderer.SetBlendShapeWeight(jawOpenBlendshapeIndex, 0);
+        }
     }
 
-    IEnumerator MoveLips()
+    private void RandomizeJawOpenValue()
     {
-        yield return new WaitForSeconds(1.0f);
+        // Définir une nouvelle valeur aléatoire entre minJawOpenValue et maxJawOpenValueRange
+        currentMaxJawOpenValue = UnityEngine.Random.Range(0.3f, 1.1f);
     }
-
 }
 
