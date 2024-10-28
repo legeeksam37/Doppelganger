@@ -1701,6 +1701,11 @@ MonoBehaviour:
   inspDetailedTimingAdjustments: 0
   doEditorConfigPreview: 0
   inspGoOriginalName: 
+--- !u!82 &817839078 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+  m_PrefabInstance: {fileID: 332653131523193199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &919711512 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5079932738637831219, guid: b5e780cfda18ab9469c25deff06532aa, type: 3}
@@ -1827,6 +1832,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verbose: 0
+  audioSource: {fileID: 817839078}
+  audioClips:
+  - {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
+  - {fileID: 8300000, guid: 4e4a05c2cc8c6cd42986bada9b266102, type: 3}
+  - {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
   dialogueNodes:
   - {fileID: 11400000, guid: 1fbee228e93c3e542968f1f8b2124920, type: 2}
   - {fileID: 11400000, guid: 9d9e544e73be5184680d77c7d501eb51, type: 2}
@@ -4065,7 +4075,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687193144896270372, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2258262446637474187, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
