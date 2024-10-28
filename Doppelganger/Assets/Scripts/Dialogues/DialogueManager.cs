@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] bool verbose;
+    public Action onTextChnaged;
     public List<Node> dialogueNodes = new List<Node>();
     const string TAG = "DIALOGUE MANAGER ";
+    string text = "";
     int i;
 
     void Start()
@@ -35,6 +38,9 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log(TAG+"Current node Id : " + dialogueNodes[i].id + ", Text : " + dialogueNodes[i].dialogueText);
 
+        text = dialogueNodes[i].dialogueText;
+        onTextChnaged?.Invoke();
+
         for (int j = 0; j <= dialogueNodes[i].nextNodes.Count - 1; j++)
         {
             // Debug.Log("next node : " + dialogueNodes[0].nextNodes[i]);
@@ -49,7 +55,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log(TAG+"next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
         }
-        i++;
+        i = nextNode.id;
     }
     Node GetNodeById(int id)
     {
@@ -92,7 +98,10 @@ public class DialogueManager : MonoBehaviour
         return nextNodes;
     }
 
-
+    public string GetDialogueText()
+    {
+        return text;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
