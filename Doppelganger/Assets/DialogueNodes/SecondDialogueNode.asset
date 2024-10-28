@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SecondDialogueNode
   m_EditorClassIdentifier: 
   id: 1
-  dialogueText: My name is Sami, I am a junior software engineer
+  dialogueText: 1
   clip: {fileID: 8300000, guid: 4e4a05c2cc8c6cd42986bada9b266102, type: 3}
   nextNodes: 02000000

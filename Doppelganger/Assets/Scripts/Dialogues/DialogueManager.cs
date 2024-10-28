@@ -6,25 +6,27 @@ using System;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] bool verbose;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] List<AudioClip>  audioClips;
     public Action onTextChnaged;
     public List<Node> dialogueNodes = new List<Node>();
     const string TAG = "DIALOGUE MANAGER ";
     string text = "";
-    int i;
+    int index;
 
     void Start()
     {
-        i = 0;
+        index = 0;
         RunDialogueNodes();
     }
 
-    void RunDialogueNodes()
+    public void RunDialogueNodes()
     {
         List<Node> nextNodesList = new List<Node>();
         if (verbose)
-            Debug.Log("Index : " + i);
+            Debug.Log("Index : " + index);
 
-        if (i >= dialogueNodes.Count)
+        if (index >= dialogueNodes.Count)
         {
             if (verbose)
                 Debug.Log("All nodes are done");
@@ -34,19 +36,22 @@ public class DialogueManager : MonoBehaviour
 
         Node nextNode = null;
 
-        Node firstNode = dialogueNodes[i];
+        Node firstNode = dialogueNodes[index];
 
-        Debug.Log(TAG+"Current node Id : " + dialogueNodes[i].id + ", Text : " + dialogueNodes[i].dialogueText);
+        Debug.Log(TAG+"Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
 
-        text = dialogueNodes[i].dialogueText;
+        audioSource.clip = audioClips[index];
+        audioSource.Play();
+
+        text = dialogueNodes[index].dialogueText;
         onTextChnaged?.Invoke();
 
-        for (int j = 0; j <= dialogueNodes[i].nextNodes.Count - 1; j++)
+        for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
         {
             if (verbose)
-                Debug.Log("next node : " + dialogueNodes[0].nextNodes[i]);
+                Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
-            nextNode = GetNodeById(dialogueNodes[i].nextNodes[j]);
+            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
             nextNodesList.Add(nextNode);
         }
 
@@ -57,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log(TAG+"next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
         }
-        i = nextNode.id;
+        index = nextNode.id;
     }
     Node GetNodeById(int id)
     {
