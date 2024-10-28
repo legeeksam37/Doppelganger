@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 0
   dialogueText: Hello there, who are you ?
   clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
-  nextNodes: 0100000002000000
+  nextNodes: 01000000

@@ -43,7 +43,9 @@ public class DialogueManager : MonoBehaviour
 
         for (int j = 0; j <= dialogueNodes[i].nextNodes.Count - 1; j++)
         {
-            // Debug.Log("next node : " + dialogueNodes[0].nextNodes[i]);
+            if (verbose)
+                Debug.Log("next node : " + dialogueNodes[0].nextNodes[i]);
+
             nextNode = GetNodeById(dialogueNodes[i].nextNodes[j]);
             nextNodesList.Add(nextNode);
         }

@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 2
   dialogueText: My experience relies on
   clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
-  nextNodes: 01000000
+  nextNodes: 00000000
