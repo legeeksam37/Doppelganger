@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e5e1f525caccf43802f7cdc2d80385, type: 3}
   m_Name: SecondDialogueNode
   m_EditorClassIdentifier: 
-  id: 2
-  dialogueText: My name is Sami, I am ...
+  id: 1
+  dialogueText: My name is Sami, I am a junior software engineer
   clip: {fileID: 8300000, guid: 4e4a05c2cc8c6cd42986bada9b266102, type: 3}
-  nextNodes: 03000000
+  nextNodes: 02000000

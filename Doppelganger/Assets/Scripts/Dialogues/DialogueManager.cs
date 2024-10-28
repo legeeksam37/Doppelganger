@@ -4,49 +4,53 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] bool verbose;
     public List<Node> dialogueNodes = new List<Node>();
-    List<Node> nextNodesList = new List<Node>();
+    const string TAG = "DIALOGUE MANAGER ";
+    int i;
 
     void Start()
     {
+        i = 0;
+        RunDialogueNodes();
+    }
+
+    void RunDialogueNodes()
+    {
+        List<Node> nextNodesList = new List<Node>();
+        if (verbose)
+            Debug.Log("Index : " + i);
+
+        if (i >= dialogueNodes.Count)
+        {
+            if (verbose)
+                Debug.Log("All nodes are done");
+
+            return;
+        }
+
         Node nextNode = null;
 
-        Node firstNode = dialogueNodes[0];
-  
-        Debug.Log("Id : " + dialogueNodes[0].id + ", Text : " + dialogueNodes[0].dialogueText);
+        Node firstNode = dialogueNodes[i];
 
-        for (int i = 0; i <= dialogueNodes[0].nextNodes.Count - 1; i++)
+        Debug.Log(TAG+"Current node Id : " + dialogueNodes[i].id + ", Text : " + dialogueNodes[i].dialogueText);
+
+        for (int j = 0; j <= dialogueNodes[i].nextNodes.Count - 1; j++)
         {
             // Debug.Log("next node : " + dialogueNodes[0].nextNodes[i]);
-            nextNode = GetNodeById(dialogueNodes[0].nextNodes[i]);
+            nextNode = GetNodeById(dialogueNodes[i].nextNodes[j]);
             nextNodesList.Add(nextNode);
         }
 
-        Debug.Log("Next nodes number : "+nextNodesList.Count);
+        if (verbose)
+            Debug.Log("Next nodes number : " + nextNodesList.Count);
 
-        //foreach (Node nextNodesObject in nextNodesList)
-        //{
-        //    Debug.Log("next node id : "+nextNodesObject.id+", next node text : "+ nextNodesObject.dialogueText);
-        //}
-
-        for (int i = 0; i <= nextNodesList.Count - 1; i++)
+        for (int k = 0; k <= nextNodesList.Count - 1; k++)
         {
-            Debug.Log("next node id : " + nextNodesList[i].id + ", next node text : " + nextNodesList[i].dialogueText);
+            Debug.Log(TAG+"next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
         }
-
-        //foreach (Node node in dialogueNodes)
-        //{
-        //    Debug.Log("Id : "+node.id+", Text : "+node.dialogueText);
-        //    for (int i = 0; i <= node.nextNodes.Count-1; i++)
-        //    {
-        //        Debug.Log("next node : " + node.nextNodes[i]);
-        //        nextNode = GetNextNode(node.nextNodes[i]);
-        //    }
-        //}
-        // Debug.Log("Next Node Id : " + nextNode.id + ", Text : " + nextNode.dialogueText);
+        i++;
     }
-
-
     Node GetNodeById(int id)
     {
         Node nodeObject = null;
@@ -55,20 +59,10 @@ public class DialogueManager : MonoBehaviour
         {
             if (node.id == id)
                 nodeObject = node;
-            else
-                Debug.Log("Node didn't found by id");
         }
 
         return nodeObject;
     }
-
-
-
-
-
-
-
-
 
     Node GetNextNode(int nodeID)
     {
@@ -98,9 +92,12 @@ public class DialogueManager : MonoBehaviour
         return nextNodes;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RunDialogueNodes();
+        }
     }
 }

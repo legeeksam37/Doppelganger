@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e5e1f525caccf43802f7cdc2d80385, type: 3}
   m_Name: ThirdDialogueNode
   m_EditorClassIdentifier: 
-  id: 3
-  dialogueText: 'My academic journey started with '
+  id: 2
+  dialogueText: My experience relies on
   clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
-  nextNodes: 04000000
+  nextNodes: 01000000

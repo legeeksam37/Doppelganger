@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e5e1f525caccf43802f7cdc2d80385, type: 3}
   m_Name: FirstDialogueNode
   m_EditorClassIdentifier: 
-  id: 1
-  dialogueText: Hello there how are you ?
+  id: 0
+  dialogueText: Hello there, who are you ?
   clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
-  nextNodes: 0200000003000000
+  nextNodes: 0100000002000000
