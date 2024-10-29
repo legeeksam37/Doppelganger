@@ -9,6 +9,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<AudioClip>  audioClips;
     public Action onTextChnaged;
+    public Action onTalk;
+    public Action onTalkFinished;
     public List<Node> dialogueNodes = new List<Node>();
     const string TAG = "DIALOGUE MANAGER ";
     string text = "";
@@ -40,11 +42,9 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log(TAG+"Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
 
-        audioSource.clip = audioClips[index];
-        audioSource.Play();
+        PlayAudioClip();
 
-        text = dialogueNodes[index].dialogueText;
-        onTextChnaged?.Invoke();
+        DisplayDialogueText();
 
         for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
         {
@@ -64,6 +64,28 @@ public class DialogueManager : MonoBehaviour
         }
         index = nextNode.id;
     }
+
+    void PlayAudioClip()
+    {
+        onTalk?.Invoke();
+        audioSource.clip = audioClips[index];
+        audioSource.Play();
+        Invoke(nameof(TriggerAudioFinished), audioSource.clip.length);
+
+    }
+
+    private void TriggerAudioFinished()
+    {
+        // Invoke the event to notify listeners
+        onTalkFinished?.Invoke();
+    }
+
+    void DisplayDialogueText()
+    {
+        text = dialogueNodes[index].dialogueText;
+        onTextChnaged?.Invoke();
+    }
+
     Node GetNodeById(int id)
     {
         Node nodeObject = null;

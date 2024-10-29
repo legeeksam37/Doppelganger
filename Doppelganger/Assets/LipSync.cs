@@ -11,7 +11,8 @@ public class LipSync : MonoBehaviour
     [SerializeField] bool talk;
     [SerializeField] float lipSyncSpeed;
     [SerializeField] bool verbose;
-
+    [SerializeField] DialogueManager d_manager;
+    const string TAG = "LipSync";
     SkinnedMeshRenderer skinnedMeshRenderer;
     int jawOpenBlendshapeIndex = 0; 
     int smileIndex = 1;
@@ -19,8 +20,19 @@ public class LipSync : MonoBehaviour
     float lastRandomizeTime;
     float openAmountMouth;
     float openAmountTeeth;
-    
 
+    void OnEnable()
+    {
+        d_manager.onTalk += Talk;
+        d_manager.onTalkFinished += StopTalk;
+
+    }
+
+    void OnDisable()
+    {
+        d_manager.onTalk -= Talk;
+        d_manager.onTalkFinished -= StopTalk;
+    }
     void Start()
     {
         // Accéder au Skinned Mesh Renderer
@@ -82,6 +94,18 @@ public class LipSync : MonoBehaviour
     {
         // Définir une nouvelle valeur aléatoire entre minJawOpenValue et maxJawOpenValueRange
         currentMaxJawOpenValue = UnityEngine.Random.Range(0.3f, 1.1f);
+    }
+
+    void Talk()
+    {
+        Debug.Log(TAG + " Talk");
+        talk = true;
+    }
+
+    void StopTalk()
+    {
+        Debug.Log(TAG + " Stop Talk");
+        talk = false;
     }
 }
 
