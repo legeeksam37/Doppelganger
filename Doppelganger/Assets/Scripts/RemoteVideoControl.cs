@@ -25,11 +25,19 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void PlayVideo()
     {
-        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
-        Debug.Log(videoPath);
-        videoPlayer.url = videoPath;
-        videoPlayer.Play();
-        firstPlay = false;
+        if (firstPlay)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
+            Debug.Log(videoPath);
+            videoPlayer.url = videoPath;
+            videoPlayer.Play();
+            firstPlay = false;
+        }
+        else
+        {
+            videoPlayer.Play();
+
+        }
     }
 
     public void Play()
