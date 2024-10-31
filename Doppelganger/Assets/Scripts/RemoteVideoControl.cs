@@ -15,35 +15,39 @@ public class RemoteVideoControl : MonoBehaviour
 
     int index = 0;
 
+    private void Start()
+    {
+        for (int i = 0; i <= names.Count -1; i++)
+        {
+            Debug.Log(i + ": " + names[i]);
+        }
+    }
+
+    public void PlayVideo()
+    {
+        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
+        Debug.Log(videoPath);
+        videoPlayer.url = videoPath;
+        videoPlayer.Play();
+        firstPlay = false;
+    }
 
     public void Play()
     {
    
         if (firstPlay)
         {
-            if (singleVideo)
-            {
-                string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
-                Debug.Log(videoPath);
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
+            Debug.Log(videoPath);
 
-                videoPlayer.url = videoPath;
-                videoPlayer.Play();
-                firstPlay = false;
-            }
-            else
-            {
-
-                string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
-                Debug.Log(videoPath);
-                videoPlayer.url = videoPath;
-                videoPlayer.Play();
-                firstPlay = false;
-
-            }
+            videoPlayer.url = videoPath;
+            videoPlayer.Play();
+        
         }
         else
         {
             videoPlayer.Play();
+  
         }
     }
 
@@ -59,21 +63,25 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void NextVideo()
     {
-
-        if (index >= names.Count)
+        Debug.Log("Index : " + index);
+        if (index >= names.Count-1)
         {
+            index = 0;
+            PlayVideo();
             return;
         }
         else
         {
-           index++;
-            Play();
+            Debug.Log("Next video : ");
+            index++;
+            PlayVideo();
         }
  
     }
 
     public void PreviousVideo()
     {
+        Debug.Log("Index : " + index);
         if (index <= 0)
         {
             return;
@@ -81,8 +89,17 @@ public class RemoteVideoControl : MonoBehaviour
         else
         {
             index--;
-            Play();
+            PlayVideo();
         }
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            Debug.Log("Next");
+            NextVideo();
+        }
     }
 }

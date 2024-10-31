@@ -34,7 +34,6 @@ public class AvatarMovement : MonoBehaviour
         if (dist <= 2.0f)
         {
             agent.isStopped = true;
-            Debug.Log("distance reached");
         }
             
     }
