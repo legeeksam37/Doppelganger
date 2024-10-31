@@ -11,6 +11,7 @@ public class RemoteVideoControl : MonoBehaviour
     [SerializeField] List<string> names; 
 
     bool firstPlay = true;
+    bool nextVideo = false;
     public bool singleVideo;
 
     int index = 0;
@@ -25,7 +26,7 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void PlayVideo()
     {
-        if (firstPlay)
+        if (firstPlay || nextVideo)
         {
             string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
             Debug.Log(videoPath);
@@ -75,14 +76,18 @@ public class RemoteVideoControl : MonoBehaviour
         if (index >= names.Count-1)
         {
             index = 0;
+            nextVideo = true;
             PlayVideo();
+            nextVideo = false;
             return;
         }
         else
         {
             Debug.Log("Next video : ");
+            nextVideo = true;
             index++;
             PlayVideo();
+            nextVideo = false;
         }
  
     }
@@ -97,7 +102,9 @@ public class RemoteVideoControl : MonoBehaviour
         else
         {
             index--;
+            nextVideo = true;
             PlayVideo();
+            nextVideo = false;
         }
 
     }
