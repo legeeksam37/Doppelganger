@@ -8,6 +8,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] bool verbose;
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<AudioClip>  audioClips;
+    [SerializeField] GameObject canvasParent;
+    [SerializeField] GameObject buttonDialoguePrefab;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
@@ -51,6 +53,7 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
+            Instantiate(buttonDialoguePrefab,canvasParent.transform);
             nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
             nextNodesList.Add(nextNode);
         }
@@ -65,6 +68,15 @@ public class DialogueManager : MonoBehaviour
         index = nextNode.id;
     }
 
+    public void test()
+    {
+        Debug.Log("Button prefab called");
+    }
+
+    void InstanciateDialogueButton()
+    {
+
+    }
     void PlayAudioClip()
     {
         onTalk?.Invoke();
