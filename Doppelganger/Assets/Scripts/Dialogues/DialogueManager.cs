@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     public Action onTalkFinished;
     public List<Node> dialogueNodes = new List<Node>();
     const string TAG = "DIALOGUE MANAGER ";
+    TextMeshProUGUI dialogueButtonText;
     string text = "";
     int index;
 
@@ -53,9 +56,11 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
-            Instantiate(buttonDialoguePrefab,canvasParent.transform);
-            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
-            nextNodesList.Add(nextNode);
+           GameObject dialogueBtn = Instantiate(buttonDialoguePrefab,canvasParent.transform);
+           dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+           dialogueButtonText.text = dialogueNodes[index].dialogueText;
+           nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
+           nextNodesList.Add(nextNode);
         }
 
         if (verbose)
