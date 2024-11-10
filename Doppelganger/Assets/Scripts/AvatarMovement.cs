@@ -7,6 +7,8 @@ public class AvatarMovement : MonoBehaviour
 {
     [SerializeField] Transform dest;
     [SerializeField] float speed;
+    [SerializeField] float rotSpeed;
+    [SerializeField] Transform playerRig;
 
     NavMeshAgent agent;
     const string TAG = "AvatarMovement";
@@ -31,16 +33,28 @@ public class AvatarMovement : MonoBehaviour
         dist = Vector3.Distance(transform.position, dest.position);
         //Debug.Log(TAG+" distance avatar object : "+dist);
 
-        if (dist <= 2.0f)
+        if (dist <= 0.5f)
         {
             agent.isStopped = true;
+            LookAtTarget();
         }
             
+    }
+
+    void LookAtTarget()
+    {
+        Debug.Log("look at target");
+        Vector3 dir = playerRig.position - transform.position;
+        Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotSpeed * Time.deltaTime);
+        rot.x = 0;
+        rot.z = 0;
+        transform.rotation = rot;
     }
 
     public void Move()
     {
         agent.speed = speed;
         agent.SetDestination(dest.position);
+        
     }
 }

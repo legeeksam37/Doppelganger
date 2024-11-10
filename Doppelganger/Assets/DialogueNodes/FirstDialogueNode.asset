@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 0
   dialogueText: 'Hello there ! '
   dialogueContent: 
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 4e4a05c2cc8c6cd42986bada9b266102, type: 3}
   nextNodes: 01000000
   hasInteraction: 0

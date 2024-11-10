@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
+    [SerializeField] AvatarMovement avatar;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
@@ -23,6 +24,12 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        if (avatar == null)
+        {
+            Debug.LogError("Avatar is null");
+            return;
+        }
+
         index = 0;
         RunDialogueNodes();
     }
@@ -44,6 +51,13 @@ public class DialogueManager : MonoBehaviour
         Node nextNode = null;
 
         Node firstNode = dialogueNodes[index];
+
+        Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
+
+        if (dialogueNodes[index].hasInteraction)
+        {
+            avatar.Move();
+        }
 
         Debug.Log(TAG+"Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
 
