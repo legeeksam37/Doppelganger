@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ThirdDialogueNode
   m_EditorClassIdentifier: 
   id: 2
-  dialogueText: 2
+  dialogueText: What is your academic jurney ?
+  dialogueContent: My name is Saml, I am a junior Software engineer...
   clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
   nextNodes: 00000000
+  hasInteraction: 0

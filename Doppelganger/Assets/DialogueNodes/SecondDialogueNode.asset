@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SecondDialogueNode
   m_EditorClassIdentifier: 
   id: 1
-  dialogueText: 1
-  clip: {fileID: 8300000, guid: 4e4a05c2cc8c6cd42986bada9b266102, type: 3}
+  dialogueText: Can you introduce yourself ?
+  dialogueContent: Hi there !
+  clip: {fileID: 8300000, guid: 240ce10f770ff7e44acabdb193e41edc, type: 3}
   nextNodes: 02000000
+  hasInteraction: 0

@@ -22,7 +22,7 @@ public class AvatarMovement : MonoBehaviour
             return;
         }
 
-        Move();
+       // Move();
     }
 
     // Update is called once per frame

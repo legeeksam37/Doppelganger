@@ -9,7 +9,6 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] bool verbose;
     [SerializeField] AudioSource audioSource;
-    [SerializeField] List<AudioClip>  audioClips;
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
     public Action onTextChnaged;
@@ -19,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     const string TAG = "DIALOGUE MANAGER ";
     TextMeshProUGUI dialogueButtonText;
     string text = "";
+    string dialogueContent;
     int index;
 
     void Start()
@@ -56,6 +56,7 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
+           CheckAndClearButtons();
            GameObject dialogueBtn = Instantiate(buttonDialoguePrefab,canvasParent.transform);
            dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
            dialogueButtonText.text = dialogueNodes[index].dialogueText;
@@ -84,10 +85,13 @@ public class DialogueManager : MonoBehaviour
     }
     void PlayAudioClip()
     {
+        if (dialogueNodes[index].clip == null)
+            return;
+
         onTalk?.Invoke();
-        audioSource.clip = audioClips[index];
+        audioSource.clip = dialogueNodes[index].clip;
         audioSource.Play();
-        Invoke(nameof(TriggerAudioFinished), audioSource.clip.length);
+        Invoke(nameof(TriggerAudioFinished), audioSource.clip.length); 
 
     }
 
@@ -100,6 +104,7 @@ public class DialogueManager : MonoBehaviour
     void DisplayDialogueText()
     {
         text = dialogueNodes[index].dialogueText;
+        dialogueContent = dialogueNodes[index].dialogueContent;
         onTextChnaged?.Invoke();
     }
 
@@ -144,9 +149,19 @@ public class DialogueManager : MonoBehaviour
         return nextNodes;
     }
 
+    void CheckAndClearButtons()
+    {
+        NodeButton[] allButtons = FindObjectsOfType<NodeButton>();
+
+        foreach (NodeButton button in allButtons)
+        {
+            Destroy(button.gameObject);
+        }
+    }
+
     public string GetDialogueText()
     {
-        return text;
+        return dialogueContent;
     }
     void Update()
     {

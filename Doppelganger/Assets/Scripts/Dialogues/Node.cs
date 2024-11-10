@@ -6,7 +6,9 @@ public class Node : ScriptableObject
 {
     public int id;
     public string dialogueText;  // The dialogue text for this node
+    public string dialogueContent;
     public AudioClip clip;  // The actual audio file of the text
     public List<int> nextNodes = new List<int>(); //the ids of the next nodes
+    public bool hasInteraction;
     
 }
