@@ -1,15 +1,20 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class RemoteVideoControl : MonoBehaviour
 {
     [SerializeField] VideoPlayer videoPlayer;
-    [SerializeField] AvatarMovement avatar;
+    [SerializeField] AvatarManager avatar;
     [SerializeField] string videoName;
-
+    [SerializeField] TextMeshProUGUI descTextUI;
+    [SerializeField] bool verbose;
     //[SerializeField] List<VideoPlayer> videos;
-    [SerializeField] List<string> names; 
+    [SerializeField] List<string> names;
+    [SerializeField] List<string> desc;
+
 
     bool firstPlay = true;
     bool nextVideo = false;
@@ -30,10 +35,17 @@ public class RemoteVideoControl : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i <= names.Count -1; i++)
+        if (descTextUI == null)
+            Debug.LogError("Text field is not serialized");
+
+        if (verbose)
         {
-            Debug.Log(i + ": " + names[i]);
+            for (int i = 0; i <= names.Count - 1; i++)
+            {
+                Debug.Log(i + ": " + names[i]);
+            }
         }
+
     }
 
     public void PlayVideo()
@@ -44,32 +56,13 @@ public class RemoteVideoControl : MonoBehaviour
             Debug.Log(videoPath);
             videoPlayer.url = videoPath;
             videoPlayer.Play();
+            DisplayText();
             firstPlay = false;
         }
         else
         {
             videoPlayer.Play();
 
-        }
-    }
-
-    public void Play()
-    {
-        Debug.Log(TAG + ", play");
-
-        if (firstPlay)
-        {
-            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
-            Debug.Log(videoPath);
-
-            videoPlayer.url = videoPath;
-            videoPlayer.Play();
-        
-        }
-        else
-        {
-            videoPlayer.Play();
-  
         }
     }
 
@@ -85,21 +78,21 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void NextVideo()
     {
-        Debug.Log("Index : " + index);
         if (index >= names.Count-1)
         {
             index = 0;
             nextVideo = true;
             PlayVideo();
+            DisplayText();
             nextVideo = false;
             return;
         }
         else
         {
-            Debug.Log("Next video : ");
             nextVideo = true;
             index++;
             PlayVideo();
+            DisplayText();
             nextVideo = false;
         }
  
@@ -107,7 +100,6 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void PreviousVideo()
     {
-        Debug.Log("Index : " + index);
         if (index <= 0)
         {
             return;
@@ -117,6 +109,7 @@ public class RemoteVideoControl : MonoBehaviour
             index--;
             nextVideo = true;
             PlayVideo();
+            DisplayText();
             nextVideo = false;
         }
 
@@ -126,8 +119,12 @@ public class RemoteVideoControl : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.N))
         {
-            Debug.Log("Next");
             NextVideo();
         }
+    }
+
+    void DisplayText()
+    {
+        descTextUI.text = desc[index];
     }
 }

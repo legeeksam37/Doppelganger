@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-public class AvatarMovement : MonoBehaviour
+public class AvatarManager : MonoBehaviour
 {
     [SerializeField] Transform dest;
     [SerializeField] float speed;
@@ -14,6 +14,7 @@ public class AvatarMovement : MonoBehaviour
     public Action onTargetReached;
 
     NavMeshAgent agent;
+    Animator animator;
     const string TAG = "AvatarMovement";
     float dist = 0;
     bool hasReachedtTarget;
@@ -21,17 +22,16 @@ public class AvatarMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
-        if (agent == null && dest == null)
+        if (agent == null || dest == null || animator == null)
         {
             Debug.LogError(TAG + " unassigned variables");
             return;
         }
-
-       // Move();
     }
 
-    // Update is called once per frame
+    bool state;
     void Update()
     {
         dist = Vector3.Distance(transform.position, dest.position);
@@ -46,10 +46,32 @@ public class AvatarMovement : MonoBehaviour
             {
                 onTargetReached?.Invoke();
                 hasReachedtTarget = true;
+                SetWalkAnim(false);
             }
 
         }
             
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SetWalkAnim(state);
+            state = !state;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Wave();
+        }
+
+    }
+
+    public void SetWalkAnim(bool state)
+    {
+        animator.SetBool("walk", state);
+    }
+
+    public void Wave()
+    {
+        animator.SetTrigger("wave");
     }
 
     void LookAtTarget()
@@ -66,6 +88,8 @@ public class AvatarMovement : MonoBehaviour
     {
         agent.speed = speed;
         agent.SetDestination(dest.position);
-        
+        SetWalkAnim(true);
+
+
     }
 }

@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
-    [SerializeField] AvatarMovement avatar;
+    [SerializeField] AvatarManager avatar;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
