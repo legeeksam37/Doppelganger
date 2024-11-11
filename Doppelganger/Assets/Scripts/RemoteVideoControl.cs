@@ -5,6 +5,7 @@ using UnityEngine.Video;
 public class RemoteVideoControl : MonoBehaviour
 {
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] AvatarMovement avatar;
     [SerializeField] string videoName;
 
     //[SerializeField] List<VideoPlayer> videos;
@@ -12,9 +13,20 @@ public class RemoteVideoControl : MonoBehaviour
 
     bool firstPlay = true;
     bool nextVideo = false;
+    int index = 0;
+    const string TAG = "RemoteVideoControl";
+
     public bool singleVideo;
 
-    int index = 0;
+    private void OnEnable()
+    {
+        avatar.onTargetReached += PlayVideo;
+    }
+
+    private void OnDisable()
+    {
+        avatar.onTargetReached -= PlayVideo;
+    }
 
     private void Start()
     {
@@ -43,7 +55,8 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void Play()
     {
-   
+        Debug.Log(TAG + ", play");
+
         if (firstPlay)
         {
             string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);

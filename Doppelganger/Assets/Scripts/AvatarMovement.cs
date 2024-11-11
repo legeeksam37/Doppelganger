@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class AvatarMovement : MonoBehaviour
 {
@@ -10,9 +11,12 @@ public class AvatarMovement : MonoBehaviour
     [SerializeField] float rotSpeed;
     [SerializeField] Transform playerRig;
 
+    public Action onTargetReached;
+
     NavMeshAgent agent;
     const string TAG = "AvatarMovement";
     float dist = 0;
+    bool hasReachedtTarget;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +41,13 @@ public class AvatarMovement : MonoBehaviour
         {
             agent.isStopped = true;
             LookAtTarget();
+
+            if (!hasReachedtTarget)
+            {
+                onTargetReached?.Invoke();
+                hasReachedtTarget = true;
+            }
+
         }
             
     }
