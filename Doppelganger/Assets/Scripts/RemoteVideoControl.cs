@@ -12,7 +12,6 @@ public class RemoteVideoControl : MonoBehaviour
     [SerializeField] string videoName;
     [SerializeField] TextMeshProUGUI descTextUI;
     [SerializeField] bool verbose;
-    //[SerializeField] List<VideoPlayer> videos;
     [SerializeField] List<string> names;
     [SerializeField] List<string> desc;
 
