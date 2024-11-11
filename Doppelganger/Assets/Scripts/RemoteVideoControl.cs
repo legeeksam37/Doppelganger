@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class RemoteVideoControl : MonoBehaviour
     [SerializeField] List<string> names;
     [SerializeField] List<string> desc;
 
-
+    public Action onVideoPlayed;
     bool firstPlay = true;
     bool nextVideo = false;
     int index = 0;
@@ -58,6 +59,7 @@ public class RemoteVideoControl : MonoBehaviour
             videoPlayer.Play();
             DisplayText();
             firstPlay = false;
+            onVideoPlayed?.Invoke();
         }
         else
         {
