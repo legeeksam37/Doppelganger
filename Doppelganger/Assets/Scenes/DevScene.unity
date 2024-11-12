@@ -2780,9 +2780,11 @@ MonoBehaviour:
   buttonDialoguePrefab: {fileID: 8948816974778069017, guid: 5d833c0df854cc7408cd515cc503fc02, type: 3}
   avatar: {fileID: 1016459797}
   dialogueNodes:
-  - {fileID: 11400000, guid: 1fbee228e93c3e542968f1f8b2124920, type: 2}
-  - {fileID: 11400000, guid: 9d9e544e73be5184680d77c7d501eb51, type: 2}
-  - {fileID: 11400000, guid: 1a3f046b95f7de8439e430d585612bb7, type: 2}
+  - {fileID: 11400000, guid: 088f77b55e0286444b3b7e5264f1db37, type: 2}
+  - {fileID: 11400000, guid: 5efaa726cfba49a4687be329c68433f7, type: 2}
+  - {fileID: 11400000, guid: 15640353e0679874db73814554fa587a, type: 2}
+  - {fileID: 11400000, guid: 6ecd242f502950d4ca83ea85fa84ee65, type: 2}
+  - {fileID: 11400000, guid: 81685c1f481956e49b3f7c87e812df99, type: 2}
 --- !u!4 &940650912
 Transform:
   m_ObjectHideFlags: 0

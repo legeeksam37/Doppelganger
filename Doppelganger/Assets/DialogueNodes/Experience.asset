@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e5e1f525caccf43802f7cdc2d80385, type: 3}
+  m_Name: Experience
+  m_EditorClassIdentifier: 
+  id: 3
+  dialogueText: Do you have any profesional experience ?
+  dialogueContent: Absolutely ! I began my professional journey with a three-month
+    internship as a Full-Stack Developer, where I gained hands-on experience in the
+    end-to-end development cycle, working with front-end and back-end technologies.
+    Following that, I completed a six-month internship at Capgemini as a Unity Developer.
+    In this role, I focused on immersive application development, deepening my knowledge
+    of Unity and 3D rendering. And Most recently, I completed a year-long apprenticeship
+    at Manzavision as a Software Engineer specializing in Unity application development.
+    In this position, I was responsible for designing and implementing applications
+    tailored to diverse platforms, including VR headsets, WebGL, and mobile devices.
+    My role also involved refining application performance, ensuring cross-platform
+    compatibility, and optimizing for different user experiences.
+  clip: {fileID: 8300000, guid: 15dc11f8f5cdaac49bb8b8a02b3c645f, type: 3}
+  nextNodes: 04000000
+  hasInteraction: 0
