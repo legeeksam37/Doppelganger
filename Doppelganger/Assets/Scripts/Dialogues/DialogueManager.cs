@@ -73,11 +73,9 @@ public class DialogueManager : MonoBehaviour
 
             //transform this in a coroutine that display this once the audio has finished
 
-           StartCoroutine(DisplayDialogueButton());
+           StartCoroutine(DisplayDialogueButtonAsync());
            CheckAndClearButtons();
-           GameObject dialogueBtn = Instantiate(buttonDialoguePrefab,canvasParent.transform);
-           dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
-           dialogueButtonText.text = dialogueNodes[index].dialogueText;
+           
            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
            nextNodesList.Add(nextNode);
         }
@@ -113,10 +111,13 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    IEnumerator DisplayDialogueButton()
+    IEnumerator DisplayDialogueButtonAsync()
     {
         yield return new WaitForSeconds(dialogueNodes[index].clip.length);
         Debug.Log(TAG + " audio has finished ! ");
+        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+        dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
     private void TriggerAudioFinished()
