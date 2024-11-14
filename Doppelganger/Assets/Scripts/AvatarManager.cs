@@ -19,10 +19,15 @@ public class AvatarManager : MonoBehaviour
     float dist = 0;
     bool hasReachedtTarget;
     // Start is called before the first frame update
+
+    private void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        
 
         if (agent == null || dest == null || animator == null)
         {

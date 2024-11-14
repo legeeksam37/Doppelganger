@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         index = 0;
+        avatar.Wave();
         RunDialogueNodes();
     }
 
@@ -70,6 +71,9 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
+            //transform this in a coroutine that display this once the audio has finished
+
+           StartCoroutine(DisplayDialogueButton());
            CheckAndClearButtons();
            GameObject dialogueBtn = Instantiate(buttonDialoguePrefab,canvasParent.transform);
            dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
@@ -107,6 +111,12 @@ public class DialogueManager : MonoBehaviour
         audioSource.Play();
         Invoke(nameof(TriggerAudioFinished), audioSource.clip.length); 
 
+    }
+
+    IEnumerator DisplayDialogueButton()
+    {
+        yield return new WaitForSeconds(dialogueNodes[index].clip.length);
+        Debug.Log(TAG + " audio has finished ! ");
     }
 
     private void TriggerAudioFinished()
