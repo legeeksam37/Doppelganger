@@ -32,7 +32,15 @@ public class DialogueManager : MonoBehaviour
 
         index = 0;
         avatar.Wave();
-        RunDialogueNodes();
+        //RunDialogueNodes();
+        RunFistNode();
+    }
+
+    void RunFistNode()
+    {
+        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+        dialogueButtonText.text = dialogueNodes[0].dialogueText;
     }
 
     public void RunDialogueNodes()
