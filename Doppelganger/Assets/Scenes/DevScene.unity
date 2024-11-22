@@ -2466,7 +2466,11 @@ PrefabInstance:
       objectReference: {fileID: 705169773}
     - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: desc.Array.size
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: names.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: desc.Array.data[0]
@@ -2485,6 +2489,22 @@ PrefabInstance:
         poubelles correspondante (Papier, Metal, Verre et Plastique) .   C\xF4t\xE9
         t\xE9chnique : R\xE9alisation avec le moteur Unity en 2D, avec impl\xE9mentation
         d'un algorithme de machine Learning & Behaviour tree."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: desc.Array.data[2]
+      value: Slide Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: desc.Array.data[3]
+      value: Halloween
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: names.Array.data[2]
+      value: SlideBall.mp4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: names.Array.data[3]
+      value: Halloween.mp4
       objectReference: {fileID: 0}
     - target: {fileID: 6466389937468032658, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: m_LocalPosition.y
