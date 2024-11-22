@@ -14,17 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   dialogueText: Do you have any profesional experience ?
-  dialogueContent: Absolutely ! I began my professional journey with a three-month
+  dialogueContent: 'Absolutely ! I began my professional journey with a three-month
     internship as a Full-Stack Developer, where I gained hands-on experience in the
     end-to-end development cycle, working with front-end and back-end technologies.
     Following that, I completed a six-month internship at Capgemini as a Unity Developer.
-    In this role, I focused on immersive application development, deepening my knowledge
-    of Unity and 3D rendering. And Most recently, I completed a year-long apprenticeship
-    at Manzavision as a Software Engineer specializing in Unity application development.
-    In this position, I was responsible for designing and implementing applications
-    tailored to diverse platforms, including VR headsets, WebGL, and mobile devices.
-    My role also involved refining application performance, ensuring cross-platform
-    compatibility, and optimizing for different user experiences.
-  clip: {fileID: 8300000, guid: 15dc11f8f5cdaac49bb8b8a02b3c645f, type: 3}
+    In this role, I focused on immersive application development. '
+  clip: {fileID: 8300000, guid: bb1bb4a3ac6c60f41809099fe32bd9a4, type: 3}
   nextNodes: 04000000
   hasInteraction: 0
