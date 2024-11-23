@@ -68,6 +68,11 @@ public class DialogueManager : MonoBehaviour
             avatar.Move();
         }
 
+        //if (dialogueNodes[index].endNode)
+        //{
+        //    Debug.Log("end reached");
+        //}
+
         Debug.Log(TAG+"Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
 
         PlayAudioClip();
@@ -94,8 +99,19 @@ public class DialogueManager : MonoBehaviour
         for (int k = 0; k <= nextNodesList.Count - 1; k++)
         {
             Debug.Log(TAG+"next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
+
         }
-        index = nextNode.id;
+
+        if (dialogueNodes[index].nextNodes.Count == 0)
+        {
+            Debug.Log("end reached");
+            CheckAndClearButtons();
+            return;
+        }
+        else
+        {
+            index = nextNode.id;
+        }
     }
 
     public void test()

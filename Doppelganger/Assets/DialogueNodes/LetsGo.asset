@@ -16,5 +16,6 @@ MonoBehaviour:
   dialogueText: 'Can you show me a demonstration of some of projects ? '
   dialogueContent: 
   clip: {fileID: 8300000, guid: 7063f866622b1d44c97bfead1850bd3a, type: 3}
-  nextNodes: 00000000
+  nextNodes: 
   hasInteraction: 1
+  endNode: 0
