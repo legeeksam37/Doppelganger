@@ -10,6 +10,5 @@ public class Node : ScriptableObject
     public AudioClip clip;  // The actual audio file of the text
     public List<int> nextNodes = new List<int>(); //the ids of the next nodes
     public bool hasInteraction;
-    public bool endNode;
     
 }

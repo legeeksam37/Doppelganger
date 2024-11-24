@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using DG.Tweening;
 
 public class AvatarManager : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class AvatarManager : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
 
         if (agent == null || dest == null || animator == null)
         {
@@ -72,6 +72,11 @@ public class AvatarManager : MonoBehaviour
     public void SetWalkAnim(bool state)
     {
         animator.SetBool("walk", state);
+    }
+
+    public void TestMove()
+    {
+        transform.DOMove(dest.position, 5f);
     }
 
     public void Wave()

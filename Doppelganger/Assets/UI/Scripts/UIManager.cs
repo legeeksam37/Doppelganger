@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -7,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] DialogueManager d_manager;
+    [SerializeField] GameObject doppelgangerText;
     [SerializeField] GameObject remote;
     [SerializeField] GameObject videoDesc;
     [SerializeField] RemoteVideoControl remoteControl;
@@ -14,16 +13,14 @@ public class UIManager : MonoBehaviour
     void OnEnable()
     {
         d_manager.onTextChnaged += SetText;
-        remoteControl.onVideoPlayed += ShowRemote;
-        remoteControl.onVideoPlayed += ShowVideoDesc;
+        remoteControl.onVideoPlayed += UpdateUI;
 
     }
 
     void OnDisable()
     {
         d_manager.onTextChnaged -= SetText;
-        remoteControl.onVideoPlayed -= ShowRemote;
-        remoteControl.onVideoPlayed -= ShowVideoDesc;
+        remoteControl.onVideoPlayed -= UpdateUI;
     }
 
     void Start()
@@ -43,13 +40,10 @@ public class UIManager : MonoBehaviour
         Debug.Log("Action called");
     }
 
-    void ShowRemote()
+    void UpdateUI()
     {
         remote.SetActive(true);
-    }
-
-    void ShowVideoDesc()
-    {
+        doppelgangerText.SetActive(false);
         videoDesc.SetActive(true);
     }
 }

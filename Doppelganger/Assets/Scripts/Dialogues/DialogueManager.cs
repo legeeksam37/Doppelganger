@@ -102,7 +102,7 @@ public class DialogueManager : MonoBehaviour
 
         }
 
-        if (dialogueNodes[index].nextNodes.Count == 0)
+        if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
         {
             Debug.Log("end reached");
             CheckAndClearButtons();
