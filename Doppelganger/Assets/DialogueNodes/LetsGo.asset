@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   dialogueText: 'Can you show me a demonstration of some of projects ? '
-  dialogueContent: 
+  dialogueContent: Sure ! Here they are.
   clip: {fileID: 8300000, guid: e1a381764660a724f8abc78ab436b6c7, type: 3}
   nextNodes: 
   hasInteraction: 1

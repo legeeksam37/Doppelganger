@@ -8,19 +8,26 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] bool verbose;
+    [SerializeField] UIManager uiManager;
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
     [SerializeField] AvatarManager avatar;
+    [SerializeField] AudioListener audioListener;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
     public List<Node> dialogueNodes = new List<Node>();
+
     const string TAG = "DIALOGUE MANAGER ";
+
     TextMeshProUGUI dialogueButtonText;
     string text = "";
     string dialogueContent;
     int index;
+    bool endReached;
+    List<Node> interactionsDialogueNodes = new List<Node>();
+    
 
     void Start()
     {
@@ -36,90 +43,108 @@ public class DialogueManager : MonoBehaviour
         RunFistNode();
     }
 
+    void OnDisable()
+    {
+        Debug.Log("On disabled called");
+        foreach (Node node in interactionsDialogueNodes)
+        {
+            node.hasInteraction = true;     
+        }
+    }
+
     void RunFistNode()
     {
+        index = 0;
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[0].dialogueText;
     }
 
+    public void RestartDialogue()
+    {
+        CheckAndClearButtons();
+        uiManager.ClearSubtitles();
+        uiManager.ShowSubTitles();
+        endReached = false;
+        RunFistNode();
+    }
+
     public void RunDialogueNodes(string name = null)
     {
-        List<Node> nextNodesList = new List<Node>();
-        if (verbose)
-            Debug.Log("Index : " + index);
-
-        if (index >= dialogueNodes.Count)
+        if (!endReached)
         {
+            List<Node> nextNodesList = new List<Node>();
             if (verbose)
-                Debug.Log("All nodes are done");
+                Debug.Log("Index : " + index);
 
-            return;
-        }
-
-        Node nextNode = null;
-
-        Node firstNode = dialogueNodes[index];
-
-        Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
-
-        if (dialogueNodes[index].hasInteraction)
-        {
-            avatar.Move();
-        }
-
-        //if (dialogueNodes[index].endNode)
-        //{
-        //    Debug.Log("end reached");
-        //}
-
-        Debug.Log(TAG+"Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
-
-        PlayAudioClip();
-
-        DisplayDialogueText();
-
-        for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
-        {
-            if (verbose)
-                Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
-
-            if (name == "skip")
+            if (index >= dialogueNodes.Count)
             {
+                if (verbose)
+                    Debug.Log("All nodes are done");
+
+                return;
+            }
+
+            Node nextNode = null;
+
+            Node firstNode = dialogueNodes[index];
+
+            Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
+
+            if (dialogueNodes[index].hasInteraction)
+            {
+                avatar.Move();
+                dialogueNodes[index].hasInteraction = false; // set the interaction to false so it doesn't restart it at the next dialogue 
+                interactionsDialogueNodes.Add(dialogueNodes[index]); // add it to the interactions list
+            }
+
+            Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
+
+            PlayAudioClip();
+
+            DisplayDialogueText();
+
+            for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
+            {
+                if (verbose)
+                    Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
+
+                if (name == "skip")
+                {
+                    CheckAndClearButtons();
+                    DisplayDialogueButton();
+                }
+                else
+                {
+                    StartCoroutine(DisplayDialogueButtonAsync());
+                    CheckAndClearButtons();
+                }
+
+                nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
+                nextNodesList.Add(nextNode);
+            }
+
+            if (verbose)
+                Debug.Log("Next nodes number : " + nextNodesList.Count);
+
+            for (int k = 0; k <= nextNodesList.Count - 1; k++)
+            {
+                Debug.Log(TAG + "next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
+
+            }
+
+            if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
+            {
+                Debug.Log("end reached");
+                endReached = true;
                 CheckAndClearButtons();
-                DisplayDialogueButton();
+                return;
             }
             else
             {
-                StartCoroutine(DisplayDialogueButtonAsync());
-                CheckAndClearButtons();
+                index = nextNode.id;
             }
-            
-          
-           
-           nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
-           nextNodesList.Add(nextNode);
-        }
-
-        if (verbose)
-            Debug.Log("Next nodes number : " + nextNodesList.Count);
-
-        for (int k = 0; k <= nextNodesList.Count - 1; k++)
-        {
-            Debug.Log(TAG+"next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
-
-        }
-
-        if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
-        {
-            Debug.Log("end reached");
-            CheckAndClearButtons();
-            return;
-        }
-        else
-        {
-            index = nextNode.id;
-        }
+        }      
     }
 
     private void DisplayDialogueButton()
@@ -233,5 +258,15 @@ public class DialogueManager : MonoBehaviour
         {
             RunDialogueNodes("skip");
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Mute();
+        }
+    }
+
+    public void Mute()
+    {
+        AudioListener.volume = AudioListener.volume > 0 ? 0f : 1f;
     }
 }

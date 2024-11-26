@@ -8,6 +8,7 @@ using DG.Tweening;
 public class AvatarManager : MonoBehaviour
 {
     [SerializeField] Transform dest;
+    [SerializeField] DialogueManager dialogueManager;
     [SerializeField] float speed;
     [SerializeField] float rotSpeed;
     [SerializeField] Transform playerRig;
@@ -21,8 +22,7 @@ public class AvatarManager : MonoBehaviour
     const string TAG = "AvatarMovement";
     float dist = 0;
     bool hasReachedtTarget;
-    // Start is called before the first frame update
-
+    bool isMouseOver = false;
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
@@ -48,7 +48,6 @@ public class AvatarManager : MonoBehaviour
     void Update()
     {
         dist = Vector3.Distance(transform.position, dest.position);
-        //Debug.Log(TAG+" distance avatar object : "+dist);
 
         if (dist <= 0.5f)
         {
@@ -57,14 +56,13 @@ public class AvatarManager : MonoBehaviour
 
             if (!hasReachedtTarget)
             {
+                onTargetReached?.Invoke();
                 hasReachedtTarget = true;
                 isPresenting = true;
                 SetWalkAnim(false);
-                onTargetReached?.Invoke();
             }
-
         }
-            
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetWalkAnim(state);
@@ -74,6 +72,12 @@ public class AvatarManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             Wave();
+        }
+
+        if (isMouseOver && Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Clicked on avatar");
+            dialogueManager.RestartDialogue();
         }
 
     }
@@ -112,16 +116,26 @@ public class AvatarManager : MonoBehaviour
     private void OnMouseEnter()
     {
         if (isPresenting)
+        {
             outlineEffect.enabled = true;
+            isMouseOver = true;
+        }
         else
+        {
             return;
+        }
     }
 
     private void OnMouseExit()
     {
         if (isPresenting)
+        {
             outlineEffect.enabled = false;
+            isMouseOver = false;
+        }
         else
+        {
             return;
+        }
     }
 }

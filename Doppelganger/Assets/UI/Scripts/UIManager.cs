@@ -5,10 +5,13 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] DialogueManager d_manager;
-    [SerializeField] GameObject doppelgangerText;
+    [SerializeField] GameObject doppelgangerTextCanvas;
+    [SerializeField] TextMeshProUGUI doppelgangerText;
     [SerializeField] GameObject remote;
     [SerializeField] GameObject videoDesc;
     [SerializeField] RemoteVideoControl remoteControl;
+
+
 
     void OnEnable()
     {
@@ -26,7 +29,6 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         SetText();
-
     }
 
     void Update()
@@ -43,7 +45,22 @@ public class UIManager : MonoBehaviour
     void UpdateUI()
     {
         remote.SetActive(true);
-        doppelgangerText.SetActive(false);
+       // doppelgangerTextCanvas.SetActive(false);
         videoDesc.SetActive(true);
+    }
+
+    public void HideSubTextUI()
+    {
+        doppelgangerTextCanvas.SetActive(false);
+    }
+
+    public void ShowSubTitles()
+    {
+        doppelgangerTextCanvas.SetActive(true);
+    }
+
+    public void ClearSubtitles()
+    {
+        doppelgangerText.text = string.Empty;
     }
 }
