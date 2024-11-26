@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
         dialogueButtonText.text = dialogueNodes[0].dialogueText;
     }
 
-    public void RunDialogueNodes()
+    public void RunDialogueNodes(string name = null)
     {
         List<Node> nextNodesList = new List<Node>();
         if (verbose)
@@ -84,10 +84,18 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
 
-            //transform this in a coroutine that display this once the audio has finished
-
-           StartCoroutine(DisplayDialogueButtonAsync());
-           CheckAndClearButtons();
+            if (name == "skip")
+            {
+                CheckAndClearButtons();
+                DisplayDialogueButton();
+            }
+            else
+            {
+                StartCoroutine(DisplayDialogueButtonAsync());
+                CheckAndClearButtons();
+            }
+            
+          
            
            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
            nextNodesList.Add(nextNode);
@@ -112,6 +120,13 @@ public class DialogueManager : MonoBehaviour
         {
             index = nextNode.id;
         }
+    }
+
+    private void DisplayDialogueButton()
+    {
+        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+        dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
     public void test()
@@ -216,7 +231,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            RunDialogueNodes();
+            RunDialogueNodes("skip");
         }
     }
 }
