@@ -11,11 +11,13 @@ public class AvatarManager : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float rotSpeed;
     [SerializeField] Transform playerRig;
+    [SerializeField] bool isPresenting;
 
     public Action onTargetReached;
 
     NavMeshAgent agent;
     Animator animator;
+    Outline outlineEffect;
     const string TAG = "AvatarMovement";
     float dist = 0;
     bool hasReachedtTarget;
@@ -28,6 +30,12 @@ public class AvatarManager : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        outlineEffect = GetComponent<Outline>();
+
+        if (outlineEffect == null)
+        {
+            Debug.LogError(TAG + " Missing outline");
+        }
 
         if (agent == null || dest == null || animator == null)
         {
@@ -49,9 +57,10 @@ public class AvatarManager : MonoBehaviour
 
             if (!hasReachedtTarget)
             {
-                onTargetReached?.Invoke();
                 hasReachedtTarget = true;
+                isPresenting = true;
                 SetWalkAnim(false);
+                onTargetReached?.Invoke();
             }
 
         }
@@ -86,7 +95,6 @@ public class AvatarManager : MonoBehaviour
 
     void LookAtTarget()
     {
-        Debug.Log("look at target");
         Vector3 dir = playerRig.position - transform.position;
         Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotSpeed * Time.deltaTime);
         rot.x = 0;
@@ -103,6 +111,17 @@ public class AvatarManager : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("Mouse over avatar !");
+        if (isPresenting)
+            outlineEffect.enabled = true;
+        else
+            return;
+    }
+
+    private void OnMouseExit()
+    {
+        if (isPresenting)
+            outlineEffect.enabled = false;
+        else
+            return;
     }
 }
