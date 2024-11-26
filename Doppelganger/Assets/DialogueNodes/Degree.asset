@@ -17,6 +17,6 @@ MonoBehaviour:
   dialogueContent: "I have a bachelor degree in computer sicence followed by a Master\u2019s
     degree in Project Management and Big Data, where I have learned strong skills
     in project management, requirement analysis, and software design. "
-  clip: {fileID: 8300000, guid: 087372994435d4d4d8355491e082e968, type: 3}
+  clip: {fileID: 8300000, guid: a50a7b21760cefd498c3171d8d185d17, type: 3}
   nextNodes: 03000000
   hasInteraction: 0

@@ -99,7 +99,10 @@ public class AvatarManager : MonoBehaviour
         agent.speed = speed;
         agent.SetDestination(dest.position);
         SetWalkAnim(true);
+    }
 
-
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse over avatar !");
     }
 }
