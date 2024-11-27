@@ -26,6 +26,12 @@ public class AvatarManager : MonoBehaviour
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
+        dialogueManager.onSkipDialogueNode += CheckAnimSate;
+    }
+
+    void OnDisable()
+    {
+        dialogueManager.onSkipDialogueNode -= CheckAnimSate;
     }
     void Start()
     {
@@ -104,6 +110,14 @@ public class AvatarManager : MonoBehaviour
         rot.x = 0;
         rot.z = 0;
         transform.rotation = rot;
+    }
+
+    void CheckAnimSate()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Wave"))
+        {
+            animator.Play("Idle"); // Transition to "Idle" if the animation is currently playing
+        }
     }
 
     public void Move()

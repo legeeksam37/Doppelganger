@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject buttonDialoguePrefab;
     [SerializeField] AvatarManager avatar;
     [SerializeField] AudioListener audioListener;
+    public Action onSkipDialogueNode;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
@@ -149,6 +150,7 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayDialogueButton()
     {
+        onSkipDialogueNode?.Invoke();
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[index].dialogueText;
