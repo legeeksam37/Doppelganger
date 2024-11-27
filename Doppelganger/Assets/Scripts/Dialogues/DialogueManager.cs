@@ -261,12 +261,23 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Mute();
+            OnClickMute();
         }
     }
 
-    public void Mute()
+    public void OnClickMute()
     {
-        AudioListener.volume = AudioListener.volume > 0 ? 0f : 1f;
+      //  AudioListener.volume = AudioListener.volume > 0 ? 0f : 1f;
+
+        if (AudioListener.volume > 0)
+        {
+            AudioListener.volume = 0f;
+            uiManager.IsButtonMuted(true);
+        }
+        else
+        {
+            AudioListener.volume = 1f;
+            uiManager.IsButtonMuted(false);
+        }
     }
 }
