@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     void OnEnable()
     {
         d_manager.onTextChnaged += SetText;
+        d_manager.onLastNodeReached += HideSubTextUI;
         remoteControl.onVideoPlayed += UpdateUI;
 
     }
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
     void OnDisable()
     {
         d_manager.onTextChnaged -= SetText;
+        d_manager.onLastNodeReached += HideSubTextUI;
         remoteControl.onVideoPlayed -= UpdateUI;
     }
 
@@ -47,7 +49,6 @@ public class UIManager : MonoBehaviour
     void UpdateUI()
     {
         remote.SetActive(true);
-       // doppelgangerTextCanvas.SetActive(false);
         videoDesc.SetActive(true);
     }
 

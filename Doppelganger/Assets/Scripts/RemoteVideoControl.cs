@@ -8,6 +8,7 @@ using UnityEngine.Video;
 public class RemoteVideoControl : MonoBehaviour
 {
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] SoundManager soundManager;
     [SerializeField] AvatarManager avatar;
     [SerializeField] TextMeshProUGUI descTextUI;
     [SerializeField] bool verbose;
@@ -24,11 +25,13 @@ public class RemoteVideoControl : MonoBehaviour
 
     private void OnEnable()
     {
+        soundManager.onMuted += MuteVideoSound;
         avatar.onTargetReached += PlayVideo;
     }
 
     private void OnDisable()
     {
+        soundManager.onMuted -= MuteVideoSound;
         avatar.onTargetReached -= PlayVideo;
     }
 
@@ -64,6 +67,14 @@ public class RemoteVideoControl : MonoBehaviour
             videoPlayer.Play();
 
         }
+    }
+
+    void MuteVideoSound()
+    {
+       
+        bool isMuted = videoPlayer.GetDirectAudioMute(0);
+        Debug.Log("Mute video called with state : "+isMuted);
+        videoPlayer.SetDirectAudioMute(0, !isMuted);
     }
 
     public void Stop()

@@ -13,8 +13,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
     [SerializeField] AvatarManager avatar;
-    [SerializeField] AudioListener audioListener;
+
     public Action onSkipDialogueNode;
+    public Action onLastNodeReached;
     public Action onTextChnaged;
     public Action onTalk;
     public Action onTalkFinished;
@@ -27,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     string dialogueContent;
     int index;
     bool endReached;
+    bool inCouroutine;
     List<Node> interactionsDialogueNodes = new List<Node>();
     
 
@@ -139,6 +141,7 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("end reached");
                 endReached = true;
                 CheckAndClearButtons();
+                onLastNodeReached?.Invoke();
                 return;
             }
             else
@@ -150,10 +153,16 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayDialogueButton()
     {
+        inCouroutine = false;
         onSkipDialogueNode?.Invoke();
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
-        dialogueButtonText.text = dialogueNodes[index].dialogueText;
+        //dialogueButtonText.text = dialogueNodes[index].dialogueText;
+
+        if (index > 0)
+            dialogueButtonText.text = dialogueNodes[index +1].dialogueText;
+        else
+            dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
     public void test()
@@ -179,11 +188,24 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator DisplayDialogueButtonAsync()
     {
+        inCouroutine = true;
         yield return new WaitForSeconds(dialogueNodes[index].clip.length);
-        Debug.Log(TAG + " audio has finished ! ");
-        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
-        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
-        dialogueButtonText.text = dialogueNodes[index].dialogueText;
+
+        if (inCouroutine)
+        {
+            Debug.Log(TAG + " audio has finished ! ");
+            GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+            dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+            dialogueButtonText.text = dialogueNodes[index].dialogueText;
+        }
+        else
+        {
+            Debug.Log("Is not in coroutine");
+            yield return null;
+           
+        }
+
+        inCouroutine = false;
     }
 
     private void TriggerAudioFinished()
@@ -260,26 +282,6 @@ public class DialogueManager : MonoBehaviour
         {
             RunDialogueNodes("skip");
         }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            OnClickMute();
-        }
     }
 
-    public void OnClickMute()
-    {
-      //  AudioListener.volume = AudioListener.volume > 0 ? 0f : 1f;
-
-        if (AudioListener.volume > 0)
-        {
-            AudioListener.volume = 0f;
-            uiManager.IsButtonMuted(true);
-        }
-        else
-        {
-            AudioListener.volume = 1f;
-            uiManager.IsButtonMuted(false);
-        }
-    }
 }
