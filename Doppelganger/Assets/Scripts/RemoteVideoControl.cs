@@ -69,14 +69,23 @@ public class RemoteVideoControl : MonoBehaviour
         }
     }
 
-    void MuteVideoSound()
+    public void MuteVideoSound()
     {
-       
+        //if (soundManager.IsSoundMuted())
+        //{
+        //    Debug.Log("Sound is already muted");
+        //    return;
+        //}
+
         bool isMuted = videoPlayer.GetDirectAudioMute(0);
-        Debug.Log("Mute video called with state : "+isMuted);
         videoPlayer.SetDirectAudioMute(0, !isMuted);
     }
 
+    public void OnClickMuteVideoSound()
+    {
+        bool isMuted = videoPlayer.GetDirectAudioMute(0);
+        videoPlayer.SetDirectAudioMute(0, !isMuted);
+    }
     public void Stop()
     {
         videoPlayer.Pause();
