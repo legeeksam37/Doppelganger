@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
 
     void DoRotation()
     {
-        // DORotate(new Vector3(0f, 190f, 0f), 5f);
         transform.DORotate(new Vector3(0f, 190f, 0f), 2f);
+        transform.DOMove(new Vector3(4.4f, 1.7f, 4.3f), 1f);
     }
 }
