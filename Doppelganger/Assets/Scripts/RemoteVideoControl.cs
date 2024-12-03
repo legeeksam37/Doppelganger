@@ -9,6 +9,7 @@ public class RemoteVideoControl : MonoBehaviour
 {
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] SoundManager soundManager;
+    [SerializeField] UIManager uiManager;
     [SerializeField] AvatarManager avatar;
     [SerializeField] TextMeshProUGUI descTextUI;
     [SerializeField] bool verbose;
@@ -71,12 +72,6 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void MuteVideoSound()
     {
-        //if (soundManager.IsSoundMuted())
-        //{
-        //    Debug.Log("Sound is already muted");
-        //    return;
-        //}
-
         bool isMuted = videoPlayer.GetDirectAudioMute(0);
         videoPlayer.SetDirectAudioMute(0, !isMuted);
     }
@@ -98,6 +93,8 @@ public class RemoteVideoControl : MonoBehaviour
 
     public void NextVideo()
     {
+        
+
         if (index >= names.Count-1)
         {
             index = 0;
@@ -105,6 +102,7 @@ public class RemoteVideoControl : MonoBehaviour
             PlayVideo();
             DisplayText();
             nextVideo = false;
+            uiManager.UpdateIndicator(index, "next");
             return;
         }
         else
@@ -114,8 +112,11 @@ public class RemoteVideoControl : MonoBehaviour
             PlayVideo();
             DisplayText();
             nextVideo = false;
+            uiManager.UpdateIndicator(index, "next");
+
         }
- 
+
+       
     }
 
     public void PreviousVideo()
@@ -130,19 +131,21 @@ public class RemoteVideoControl : MonoBehaviour
             nextVideo = true;
             PlayVideo();
             DisplayText();
+            uiManager.UpdateIndicator(index, "prev");
             nextVideo = false;
         }
 
     }
 
-    private void Update()
+    public int GetCurrentVideoIndex()
     {
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            NextVideo();
-        }
+        return index;
     }
 
+    public int GetNbreOfVideos()
+    {
+        return names.Count;
+    }
     void DisplayText()
     {
         descTextUI.text = desc[index];

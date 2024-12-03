@@ -33,10 +33,4 @@ public class SoundManager : MonoBehaviour
     { 
         return isSoundMuted; 
     }
-
-    private void Update()
-    {
-        Debug.Log("isSoundMuted : "+isSoundMuted);
-    }
-
 }

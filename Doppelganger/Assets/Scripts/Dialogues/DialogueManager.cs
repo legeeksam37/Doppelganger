@@ -47,7 +47,6 @@ public class DialogueManager : MonoBehaviour
 
     void OnDisable()
     {
-        Debug.Log("On disabled called");
         foreach (Node node in interactionsDialogueNodes)
         {
             node.hasInteraction = true;     
@@ -91,7 +90,8 @@ public class DialogueManager : MonoBehaviour
 
             Node firstNode = dialogueNodes[index];
 
-            Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
+            if (verbose)
+                Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
 
             if (dialogueNodes[index].hasInteraction)
             {
@@ -100,7 +100,8 @@ public class DialogueManager : MonoBehaviour
                 interactionsDialogueNodes.Add(dialogueNodes[index]); // add it to the interactions list
             }
 
-            Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
+            if (verbose)
+                Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
 
             PlayAudioClip();
 
@@ -129,15 +130,20 @@ public class DialogueManager : MonoBehaviour
             if (verbose)
                 Debug.Log("Next nodes number : " + nextNodesList.Count);
 
-            for (int k = 0; k <= nextNodesList.Count - 1; k++)
+            if (verbose)
             {
-                Debug.Log(TAG + "next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
+                for (int k = 0; k <= nextNodesList.Count - 1; k++)
+                {
+                    Debug.Log(TAG + "next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
 
+                }
             }
 
             if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
             {
-                Debug.Log("end reached");
+                if (verbose)
+                    Debug.Log("end reached");
+
                 endReached = true;
                 CheckAndClearButtons();
                 onLastNodeReached?.Invoke();

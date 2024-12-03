@@ -98,13 +98,11 @@ public class LipSync : MonoBehaviour
 
     void Talk()
     {
-        Debug.Log(TAG + " Talk");
         talk = true;
     }
 
     void StopTalk()
     {
-        Debug.Log(TAG + " Stop Talk");
         talk = false;
     }
 }
