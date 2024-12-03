@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +16,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject remote;
     [SerializeField] GameObject videoDesc;
     [SerializeField] RemoteVideoControl remoteControl;
+    [SerializeField] GameObject carouselIndicatorPrefab;
+    [SerializeField] Transform carouselIndicatorParent;
+
+    int nbreOfVideos;
+    [SerializeField]  List<GameObject> carouselIndicatorsLst = new List<GameObject>();
+    [SerializeField]  List<Graphic> carouselIndicatorGraphE = new List<Graphic>();
 
     void OnEnable()
     {
@@ -33,17 +41,13 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         SetText();
+        nbreOfVideos = remoteControl.GetNbreOfVideos();
+        InstanciateCarouselIndicator();
+        carouselIndicatorGraphE[0].DOFade(1, 0.5f);
     }
-
-    void Update()
-    {
-        
-    }
-
     void SetText()
     {
         text.text = d_manager.GetDialogueText();
-        Debug.Log("Action called");
     }
 
     void UpdateUI()
@@ -67,11 +71,58 @@ public class UIManager : MonoBehaviour
         doppelgangerText.text = string.Empty;
     }
 
+    void InstanciateCarouselIndicator()
+    {
+        GameObject carouselIndicator;
+        GameObject indicatorImage;
+        Graphic graphicElement;
+
+        for (int i = 0; i < nbreOfVideos; i++)
+        {
+            carouselIndicator =  Instantiate(carouselIndicatorPrefab, carouselIndicatorParent);
+            indicatorImage = carouselIndicator.transform.GetChild(0).gameObject;
+            graphicElement = indicatorImage.GetComponent<Graphic>();
+            carouselIndicatorsLst.Add(carouselIndicator);
+            carouselIndicatorGraphE.Add(graphicElement);
+        }
+
+    }
+
+    public void UpdateIndicator(int index, string position)
+    {
+        if (position == "next")
+        {
+            if (index == 0)
+            {
+                carouselIndicatorGraphE[nbreOfVideos-1].DOFade(0, 0.5f);
+                carouselIndicatorGraphE[index].DOFade(1, 0.5f);
+            }
+            else
+            {
+                carouselIndicatorGraphE[index - 1].DOFade(0, 0.5f);
+                carouselIndicatorGraphE[index].DOFade(1, 0.5f);
+            }
+
+        } else if (position == "prev")
+        {
+            carouselIndicatorGraphE[index + 1].DOFade(0, 0.5f);
+            carouselIndicatorGraphE[index].DOFade(1, 0.5f);
+        }
+    }
+
+    void ResetIndicators()
+    {
+        for (int i = 0; i < carouselIndicatorsLst.Count; i++)
+        {
+
+        }
+    }
+
     public void IsButtonMuted(bool state)
     {
         if (state)
-            muteButton.image.sprite = unMuteSprite;
-        else
             muteButton.image.sprite = muteSprite;
+        else
+            muteButton.image.sprite = unMuteSprite;
     }
 }
