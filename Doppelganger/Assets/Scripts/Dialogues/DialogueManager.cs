@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject canvasParent;
     [SerializeField] GameObject buttonDialoguePrefab;
     [SerializeField] AvatarManager avatar;
+    [SerializeField] SoundManager soundManager;
 
     public Action onSkipDialogueNode;
     public Action onLastNodeReached;
@@ -116,6 +117,9 @@ public class DialogueManager : MonoBehaviour
                 {
                     CheckAndClearButtons();
                     DisplayDialogueButton();
+                    uiManager.ClearSubtitles();
+                    soundManager.StopDoppelgangerAudio();
+
                 }
                 else
                 {

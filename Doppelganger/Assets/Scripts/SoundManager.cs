@@ -6,6 +6,7 @@ using System;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] UIManager uiManager;
+    [SerializeField] AudioSource doppelgangerAudioSource;
 
     public Action onMuted;
 
@@ -29,8 +30,21 @@ public class SoundManager : MonoBehaviour
        
     }
 
+    public void StopDoppelgangerAudio()
+    {
+        doppelgangerAudioSource.Stop();
+    }
+
     public bool IsSoundMuted()
     { 
         return isSoundMuted; 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StopDoppelgangerAudio();
+        }
     }
 }

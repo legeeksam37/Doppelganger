@@ -2194,6 +2194,7 @@ MonoBehaviour:
   canvasParent: {fileID: 2106351786}
   buttonDialoguePrefab: {fileID: 8948816974778069017, guid: 5d833c0df854cc7408cd515cc503fc02, type: 3}
   avatar: {fileID: 1016459797}
+  soundManager: {fileID: 1422566890}
   dialogueNodes:
   - {fileID: 11400000, guid: 088f77b55e0286444b3b7e5264f1db37, type: 2}
   - {fileID: 11400000, guid: 5efaa726cfba49a4687be329c68433f7, type: 2}
@@ -2859,6 +2860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1795838139}
+  doppelgangerAudioSource: {fileID: 817839078}
 --- !u!4 &1422566891
 Transform:
   m_ObjectHideFlags: 0
