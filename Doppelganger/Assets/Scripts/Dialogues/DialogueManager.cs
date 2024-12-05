@@ -73,106 +73,100 @@ public class DialogueManager : MonoBehaviour
 
     public void RunDialogueNodes(string name = null)
     {
-        if (!endReached)
+
+        if (endReached)
+            return;
+
+        List<Node> nextNodesList = new List<Node>();
+
+        if (verbose)
+            Debug.Log("Index : " + index);
+
+        Node nextNode = null;
+
+        Node firstNode = dialogueNodes[index];
+
+        if (verbose)
+            Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
+
+        if (dialogueNodes[index].hasInteraction)
         {
-            List<Node> nextNodesList = new List<Node>();
+            avatar.Move();
+            dialogueNodes[index].hasInteraction = false; // set the interaction to false so it doesn't restart it at the next dialogue 
+            interactionsDialogueNodes.Add(dialogueNodes[index]); // add it to the interactions list, at the end it s reset to true
+        }
+
+        if (verbose)
+            Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", current index : " + index);
+
+        PlayAudioClip();
+
+        DisplayDialogueText();
+
+        //if we skip the last node
+
+        if (dialogueNodes.Count == index +1 && name == "skip")
+        {
             if (verbose)
-                Debug.Log("Index : " + index);
+                Debug.Log("Last node");
 
-            if (index >= dialogueNodes.Count)
+            CheckAndClearButtons();
+            inCouroutine = false;
+            uiManager.ClearSubtitles();
+            soundManager.StopDoppelgangerAudio();
+
+        }
+
+
+        for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
+        {
+            if (name == "skip")
             {
-                if (verbose)
-                    Debug.Log("All nodes are done");
-
-                return;
-            }
-
-            Node nextNode = null;
-
-            Node firstNode = dialogueNodes[index];
-
-            if (verbose)
-                Debug.Log("Can interract : " + dialogueNodes[index].hasInteraction);
-
-            if (dialogueNodes[index].hasInteraction)
-            {
-                avatar.Move();
-                dialogueNodes[index].hasInteraction = false; // set the interaction to false so it doesn't restart it at the next dialogue 
-                interactionsDialogueNodes.Add(dialogueNodes[index]); // add it to the interactions list
-            }
-
-            if (verbose)
-                Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", Text : " + dialogueNodes[index].dialogueText);
-
-            PlayAudioClip();
-
-            DisplayDialogueText();
-
-            for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
-            {
-                if (verbose)
-                    Debug.Log("next node : " + dialogueNodes[0].nextNodes[index]);
-
-                if (name == "skip")
-                {
-                    CheckAndClearButtons();
-                    DisplayDialogueButton();
-                    uiManager.ClearSubtitles();
-                    soundManager.StopDoppelgangerAudio();
-
-                }
-                else
-                {
-                    StartCoroutine(DisplayDialogueButtonAsync());
-                    CheckAndClearButtons();
-                }
-
-                nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
-                nextNodesList.Add(nextNode);
-            }
-
-            if (verbose)
-                Debug.Log("Next nodes number : " + nextNodesList.Count);
-
-            if (verbose)
-            {
-                for (int k = 0; k <= nextNodesList.Count - 1; k++)
-                {
-                    Debug.Log(TAG + "next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
-
-                }
-            }
-
-            if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
-            {
-                if (verbose)
-                    Debug.Log("end reached");
-
-                endReached = true;
                 CheckAndClearButtons();
-                onLastNodeReached?.Invoke();
-                return;
+                DisplayDialogueButton();
+                uiManager.ClearSubtitles();
+                soundManager.StopDoppelgangerAudio();
+
             }
             else
             {
-                index = nextNode.id;
+                StartCoroutine(DisplayDialogueButtonAsync());
+                CheckAndClearButtons();
             }
-        }      
-    }
 
-    private void DisplayDialogueButton()
-    {
-        inCouroutine = false;
-        onSkipDialogueNode?.Invoke();
-        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
-        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
-        //dialogueButtonText.text = dialogueNodes[index].dialogueText;
+            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
+            nextNodesList.Add(nextNode);
+        }
 
-        if (index > 0)
-            dialogueButtonText.text = dialogueNodes[index +1].dialogueText;
+        if (verbose)
+            Debug.Log("Next nodes number : " + nextNodesList.Count);
+
+        if (verbose)
+        {
+            for (int k = 0; k <= nextNodesList.Count - 1; k++)
+            {
+                Debug.Log(TAG + "next node id : " + nextNodesList[k].id + ", next node text : " + nextNodesList[k].dialogueText);
+
+            }
+        }
+
+        if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
+        {
+            if (verbose)
+                Debug.Log("end reached");
+
+            endReached = true;
+            CheckAndClearButtons();
+            onLastNodeReached?.Invoke();
+            return;
+        }
         else
-            dialogueButtonText.text = dialogueNodes[index].dialogueText;
+        {
+            index = nextNode.id;
+        }        
     }
+
+    
 
     public void test()
     {
@@ -193,6 +187,20 @@ public class DialogueManager : MonoBehaviour
         audioSource.Play();
         Invoke(nameof(TriggerAudioFinished), audioSource.clip.length); 
 
+    }
+
+    private void DisplayDialogueButton()
+    {
+        inCouroutine = false;
+
+        onSkipDialogueNode?.Invoke();
+        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (index > 0)
+            dialogueButtonText.text = dialogueNodes[index + 1].dialogueText;
+        else
+            dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
     IEnumerator DisplayDialogueButtonAsync()
@@ -287,6 +295,8 @@ public class DialogueManager : MonoBehaviour
     }
     void Update()
     {
+        Debug.Log(TAG+" Is in coroutine : " + inCouroutine);
+        
         if (Input.GetKeyDown(KeyCode.E))
         {
             RunDialogueNodes("skip");

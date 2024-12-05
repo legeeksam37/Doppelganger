@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dbe777bd93fb44fb007c091a633dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verbose: 0
+  verbose: 1
   uiManager: {fileID: 1795838139}
   audioSource: {fileID: 817839078}
   canvasParent: {fileID: 2106351786}

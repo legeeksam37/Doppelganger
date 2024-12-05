@@ -31,7 +31,6 @@ public class NodeButton : MonoBehaviour
     // Update is called once per frame
     void OnButtonClicked()
     {
-        Debug.Log("Button is clicked !! ");
         d_manager.RunDialogueNodes();
     }
 }
