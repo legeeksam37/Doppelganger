@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dbe777bd93fb44fb007c091a633dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verbose: 1
+  verbose: 0
   uiManager: {fileID: 1795838139}
   audioSource: {fileID: 817839078}
   canvasParent: {fileID: 2106351786}
@@ -4111,6 +4111,10 @@ PrefabInstance:
       propertyPath: d_manager
       value: 
       objectReference: {fileID: 940650911}
+    - target: {fileID: 7932226570939021839, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 0.273
+      objectReference: {fileID: 0}
     - target: {fileID: 9161641527114186972, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.12757719

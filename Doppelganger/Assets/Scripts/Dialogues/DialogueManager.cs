@@ -73,6 +73,8 @@ public class DialogueManager : MonoBehaviour
 
     public void RunDialogueNodes(string name = null)
     {
+        if (verbose)
+            Debug.Log("Index : " + index+", Dialogue id : "+ dialogueNodes[index].id);
 
         if (endReached)
             return;
@@ -103,25 +105,39 @@ public class DialogueManager : MonoBehaviour
 
         DisplayDialogueText();
 
-        //if we skip the last node
-
-        if (dialogueNodes.Count == index +1 && name == "skip")
+        //if last node (no next nodes)
+        if (dialogueNodes[index].nextNodes.Count == 0)
         {
+           
             if (verbose)
                 Debug.Log("Last node");
 
+            if (name == "skip")
+            {
+                soundManager.StopDoppelgangerAudio();
+            }
+
             CheckAndClearButtons();
             inCouroutine = false;
+            endReached = true;
             uiManager.ClearSubtitles();
-            soundManager.StopDoppelgangerAudio();
-
+            onLastNodeReached?.Invoke();
+            return;
+           
+                     
         }
 
 
         for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
         {
+            Debug.Log("Skip 2");
+            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
+            nextNodesList.Add(nextNode);
+            
+
             if (name == "skip")
             {
+                UpdateIndex(nextNode.id);
                 CheckAndClearButtons();
                 DisplayDialogueButton();
                 uiManager.ClearSubtitles();
@@ -130,12 +146,10 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine(DisplayDialogueButtonAsync());
+                StartCoroutine(DisplayDialogueButtonAsync(nextNode.id));
                 CheckAndClearButtons();
             }
 
-            nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
-            nextNodesList.Add(nextNode);
         }
 
         if (verbose)
@@ -149,7 +163,10 @@ public class DialogueManager : MonoBehaviour
 
             }
         }
+    }
 
+    void UpdateIndex(int newIndex)
+    {
         if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
         {
             if (verbose)
@@ -162,15 +179,8 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            index = nextNode.id;
-        }        
-    }
-
-    
-
-    public void test()
-    {
-        Debug.Log("Button prefab called");
+            index = newIndex;
+        }
     }
 
     void InstanciateDialogueButton()
@@ -192,25 +202,20 @@ public class DialogueManager : MonoBehaviour
     private void DisplayDialogueButton()
     {
         inCouroutine = false;
-
         onSkipDialogueNode?.Invoke();
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
-
-        if (index > 0)
-            dialogueButtonText.text = dialogueNodes[index + 1].dialogueText;
-        else
-            dialogueButtonText.text = dialogueNodes[index].dialogueText;
+        dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
-    IEnumerator DisplayDialogueButtonAsync()
+    IEnumerator DisplayDialogueButtonAsync(int newIndex)
     {
         inCouroutine = true;
         yield return new WaitForSeconds(dialogueNodes[index].clip.length);
 
         if (inCouroutine)
         {
-            Debug.Log(TAG + " audio has finished ! ");
+            UpdateIndex(newIndex);
             GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
             dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
             dialogueButtonText.text = dialogueNodes[index].dialogueText;
@@ -221,7 +226,6 @@ public class DialogueManager : MonoBehaviour
             yield return null;
            
         }
-
         inCouroutine = false;
     }
 
@@ -292,15 +296,6 @@ public class DialogueManager : MonoBehaviour
     public string GetDialogueText()
     {
         return dialogueContent;
-    }
-    void Update()
-    {
-        Debug.Log(TAG+" Is in coroutine : " + inCouroutine);
-        
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RunDialogueNodes("skip");
-        }
     }
 
 }
