@@ -57,7 +57,7 @@ public class LipSync : MonoBehaviour
     void Update()
     {
         if (verbose)
-            Debug.Log("Time.time value : " + Time.time);
+            Debug.Log("talk : " + talk);
 
         if (Input.GetKeyDown(KeyCode.C))
         {

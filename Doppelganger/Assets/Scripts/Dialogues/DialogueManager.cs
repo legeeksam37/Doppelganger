@@ -103,7 +103,6 @@ public class DialogueManager : MonoBehaviour
             Debug.Log(TAG + "Current node Id : " + dialogueNodes[index].id + ", current index : " + index);
 
         PlayAudioClip();
-
         DisplayDialogueText();
 
         //if last node (no next nodes)
@@ -203,6 +202,8 @@ public class DialogueManager : MonoBehaviour
     private void DisplayDialogueButton()
     {
         inCouroutine = false;
+        CancelInvoke(nameof(TriggerAudioFinished));
+        onTalkFinished?.Invoke();
         onSkipDialogueNode?.Invoke();
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
@@ -310,16 +311,5 @@ public class DialogueManager : MonoBehaviour
     {
         return dialogueContent;
     }
-
-    void Update()
-    {
-        Debug.Log(TAG + " Is button " + ButtonOnScene());
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RunDialogueNodes("skip");
-        }
-    }
-
 
 }
