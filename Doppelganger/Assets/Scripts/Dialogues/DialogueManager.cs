@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour
     int index;
     bool endReached;
     bool inCouroutine;
+    bool noButton;
     List<Node> interactionsDialogueNodes = new List<Node>();
     
 
@@ -213,6 +214,12 @@ public class DialogueManager : MonoBehaviour
         inCouroutine = true;
         yield return new WaitForSeconds(dialogueNodes[index].clip.length);
 
+        if (!ButtonOnScene())
+        {
+            Debug.Log("Button already instanciated");
+            yield break;
+        }
+
         if (inCouroutine)
         {
             UpdateIndex(newIndex);
@@ -293,9 +300,26 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    bool ButtonOnScene()
+    {
+        NodeButton button = FindObjectOfType<NodeButton>();
+        return button != null;
+    }
+
     public string GetDialogueText()
     {
         return dialogueContent;
     }
+
+    void Update()
+    {
+        Debug.Log(TAG + " Is button " + ButtonOnScene());
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RunDialogueNodes("skip");
+        }
+    }
+
 
 }
