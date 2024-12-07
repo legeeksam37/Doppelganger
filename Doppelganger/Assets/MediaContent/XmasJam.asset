@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee674ae76d4e4449a4bd4d154522f14, type: 3}
+  m_Name: XmasJam
+  m_EditorClassIdentifier: 
+  id: 0
+  title: Xmas Jam
+  description: 'In this TPS game created during a Christmas-themed GameJam, you play
+    as Santa Claus, exploring the map to collect as many gifts as possible, each
+    with random point values. At the end of the time limit, the player with the highest
+    score wins.  Technical details: The project focuses on multiplayer implementation
+    and RPC (Remote Procedure Calls).'
+  videoName: projet1.mp4

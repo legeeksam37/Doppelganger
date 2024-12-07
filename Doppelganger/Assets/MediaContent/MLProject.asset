@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee674ae76d4e4449a4bd4d154522f14, type: 3}
+  m_Name: MLProject
+  m_EditorClassIdentifier: 
+  id: 1
+  title: Eco Chain
+  description: 'EcoChain is a 2D versus game themed around sustainable development,
+    where the player competes against an algorithm. Recyclable waste moves along
+    conveyor belts, and both players must sort it into the correct bins (Paper, Metal,
+    Glass, and Plastic).  Technical details: Developed using the Unity engine in
+    2D, featuring the implementation of a machine learning algorithm and behavior
+    tree.'
+  videoName: EcoChain.mp4

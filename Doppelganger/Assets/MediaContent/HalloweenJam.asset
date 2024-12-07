@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee674ae76d4e4449a4bd4d154522f14, type: 3}
+  m_Name: HalloweenJam
+  m_EditorClassIdentifier: 
+  id: 3
+  title: Vampire Madness
+  description: Halloween Survival is a multiplayer TPS game created during a week-long
+    Halloween-themed game jam. Dive into a haunting ghost town, play as a hero, and
+    fend off endless waves of zombies. Survive the terrifying atmosphere by using
+    healing items to regain strength and keep fighting... endlessly.
+  videoName: Halloween.mp4

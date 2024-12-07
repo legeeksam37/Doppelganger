@@ -7,22 +7,21 @@ using UnityEngine.Video;
 
 public class RemoteVideoControl : MonoBehaviour
 {
+    [SerializeField] List<MediaContent> mediaContents;
+
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] SoundManager soundManager;
     [SerializeField] UIManager uiManager;
     [SerializeField] AvatarManager avatar;
+    [SerializeField] TextMeshProUGUI titleTextUI;
     [SerializeField] TextMeshProUGUI descTextUI;
     [SerializeField] bool verbose;
-    [SerializeField] List<string> names;
-    [SerializeField] List<string> desc;
 
     public Action onVideoPlayed;
     bool firstPlay = true;
     bool nextVideo = false;
     int index = 0;
     const string TAG = "RemoteVideoControl";
-
-    public bool singleVideo;
 
     private void OnEnable()
     {
@@ -38,14 +37,18 @@ public class RemoteVideoControl : MonoBehaviour
 
     private void Start()
     {
+
         if (descTextUI == null)
             Debug.LogError("Text field is not serialized");
 
         if (verbose)
         {
-            for (int i = 0; i <= names.Count - 1; i++)
+            for (int i = 0; i < mediaContents.Count; i++)
             {
-                Debug.Log(i + ": " + names[i]);
+                Debug.Log("Media content id :" + mediaContents[i].id);
+                Debug.Log("Media content title :" + mediaContents[i].title);
+                Debug.Log("Media content description :" + mediaContents[i].description);
+                Debug.Log("Media content video url :" + mediaContents[i].videoName);
             }
         }
 
@@ -55,7 +58,7 @@ public class RemoteVideoControl : MonoBehaviour
     {
         if (firstPlay || nextVideo)
         {
-            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, names[index]);
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, mediaContents[index].videoName);
 
             if (verbose)
                 Debug.Log(videoPath);
@@ -98,7 +101,7 @@ public class RemoteVideoControl : MonoBehaviour
     {
         
 
-        if (index >= names.Count-1)
+        if (index >= mediaContents.Count - 1)
         {
             index = 0;
             nextVideo = true;
@@ -147,10 +150,11 @@ public class RemoteVideoControl : MonoBehaviour
 
     public int GetNbreOfVideos()
     {
-        return names.Count;
+        return mediaContents.Count;
     }
     void DisplayText()
     {
-        descTextUI.text = desc[index];
+        titleTextUI.text = mediaContents[index].title;
+        descTextUI.text = mediaContents[index].description;
     }
 }
