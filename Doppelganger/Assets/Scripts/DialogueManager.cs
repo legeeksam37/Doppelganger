@@ -31,7 +31,8 @@ public class DialogueManager : MonoBehaviour
     bool inCouroutine;
     bool noButton;
     List<Node> interactionsDialogueNodes = new List<Node>();
-    
+    Coroutine dialogueCoroutine;
+
 
     void Start()
     {
@@ -146,7 +147,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine(DisplayDialogueButtonAsync(nextNode.id));
+                dialogueCoroutine = StartCoroutine(DisplayDialogueButtonAsync(nextNode.id));
                 CheckAndClearButtons();
             }
 
@@ -202,6 +203,15 @@ public class DialogueManager : MonoBehaviour
     private void DisplayDialogueButton()
     {
         inCouroutine = false;
+
+        if (dialogueCoroutine != null)
+        {
+           StopCoroutine(dialogueCoroutine);
+
+            if(verbose)
+                Debug.Log("Stop coroutine");
+        }
+
         CancelInvoke(nameof(TriggerAudioFinished));
         onTalkFinished?.Invoke();
         onSkipDialogueNode?.Invoke();
@@ -214,12 +224,6 @@ public class DialogueManager : MonoBehaviour
     {
         inCouroutine = true;
         yield return new WaitForSeconds(dialogueNodes[index].clip.length);
-
-        if (!ButtonOnScene())
-        {
-            Debug.Log("Button already instanciated");
-            yield break;
-        }
 
         if (inCouroutine)
         {
