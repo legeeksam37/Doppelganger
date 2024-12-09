@@ -40,11 +40,4 @@ public class SoundManager : MonoBehaviour
         return isSoundMuted; 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            StopDoppelgangerAudio();
-        }
-    }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
@@ -9,6 +7,7 @@ public class AvatarManager : MonoBehaviour
 {
     [SerializeField] Transform dest;
     [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] UIManager uiManager;
     [SerializeField] float speed;
     [SerializeField] float rotSpeed;
     [SerializeField] Transform playerRig;
@@ -19,6 +18,7 @@ public class AvatarManager : MonoBehaviour
     NavMeshAgent agent;
     Animator animator;
     Outline outlineEffect;
+    GameObject doppelgangerHeadText;
     const string TAG = "AvatarMovement";
     float dist = 0;
     bool hasReachedtTarget;
@@ -26,6 +26,11 @@ public class AvatarManager : MonoBehaviour
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
+        doppelgangerHeadText = transform.GetChild(0).gameObject;
+
+        if (doppelgangerHeadText == null)
+            Debug.LogError(TAG+" No Head text at position 0 as child object !");
+
         dialogueManager.onSkipDialogueNode += CheckAnimSate;
     }
 
@@ -53,6 +58,8 @@ public class AvatarManager : MonoBehaviour
     bool state;
     void Update()
     {
+        Debug.Log(TAG+" In dialogue: " + dialogueManager.EndReached());
+
         dist = Vector3.Distance(transform.position, dest.position);
 
         if (dist <= 0.5f)
@@ -69,21 +76,18 @@ public class AvatarManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetWalkAnim(state);
-            state = !state;
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Wave();
-        }
-
         if (isMouseOver && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Clicked on avatar");
-            dialogueManager.RestartDialogue();
+            Debug.Log(TAG + " Clicked on avatar");
+            if (dialogueManager.EndReached())
+            {
+                dialogueManager.RestartDialogue();
+            }
+            else
+            {
+                dialogueManager.CancelDialogue();
+            }
+
         }
 
     }
@@ -128,11 +132,22 @@ public class AvatarManager : MonoBehaviour
     }
 
     private void OnMouseEnter()
-    {
+    {        
         if (isPresenting)
         {
             outlineEffect.enabled = true;
             isMouseOver = true;
+            doppelgangerHeadText.SetActive(true);
+
+            if (dialogueManager.EndReached())
+            {
+                uiManager.SetDoppelGangerHeadText("Restart the dialogue");
+            }
+            else
+            {
+                uiManager.SetDoppelGangerHeadText("Stop the dialogue");
+            }
+
         }
         else
         {
@@ -146,10 +161,12 @@ public class AvatarManager : MonoBehaviour
         {
             outlineEffect.enabled = false;
             isMouseOver = false;
+            doppelgangerHeadText.SetActive(false);
         }
         else
         {
             return;
         }
     }
+
 }

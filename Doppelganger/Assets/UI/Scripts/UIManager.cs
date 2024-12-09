@@ -7,6 +7,7 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI doppelgangerHeadTextUI;
     [SerializeField] DialogueManager d_manager;
     [SerializeField] Sprite muteSprite;
     [SerializeField] Sprite unMuteSprite;
@@ -71,6 +72,10 @@ public class UIManager : MonoBehaviour
         doppelgangerText.text = string.Empty;
     }
 
+    public void SetDoppelGangerHeadText(string headText)
+    {
+        doppelgangerHeadTextUI.text = headText;
+    }
     void InstanciateCarouselIndicator()
     {
         GameObject carouselIndicator;
@@ -107,14 +112,6 @@ public class UIManager : MonoBehaviour
         {
             carouselIndicatorGraphE[index + 1].DOFade(0, 0.5f);
             carouselIndicatorGraphE[index].DOFade(1, 0.5f);
-        }
-    }
-
-    void ResetIndicators()
-    {
-        for (int i = 0; i < carouselIndicatorsLst.Count; i++)
-        {
-
         }
     }
 

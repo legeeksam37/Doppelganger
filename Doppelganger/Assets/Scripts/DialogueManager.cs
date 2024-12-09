@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     bool endReached;
     bool inCouroutine;
     bool noButton;
+    bool inDialogue;
     List<Node> interactionsDialogueNodes = new List<Node>();
     Coroutine dialogueCoroutine;
 
@@ -44,7 +45,6 @@ public class DialogueManager : MonoBehaviour
 
         index = 0;
         avatar.Wave();
-        //RunDialogueNodes();
         RunFistNode();
     }
 
@@ -59,9 +59,15 @@ public class DialogueManager : MonoBehaviour
     void RunFistNode()
     {
         index = 0;
+        endReached = false;
         GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[0].dialogueText;
+    }
+
+    public bool EndReached()
+    {
+        return endReached;
     }
 
     public void RestartDialogue()
@@ -79,7 +85,10 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Index : " + index+", Dialogue id : "+ dialogueNodes[index].id);
 
         if (endReached)
+        {
             return;
+        }
+
 
         List<Node> nextNodesList = new List<Node>();
 
@@ -140,7 +149,7 @@ public class DialogueManager : MonoBehaviour
             {
                 UpdateIndex(nextNode.id);
                 CheckAndClearButtons();
-                DisplayDialogueButton();
+                NextDialogueButton();
                 uiManager.ClearSubtitles();
                 soundManager.StopDoppelgangerAudio();
 
@@ -166,6 +175,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+   public void CancelDialogue()
+    {
+        endReached = true;
+        StopDialogueCoroutine();
+        CheckAndClearButtons();
+        uiManager.ClearSubtitles();
+        soundManager.StopDoppelgangerAudio();
+        onLastNodeReached?.Invoke();
+        onTalkFinished?.Invoke();
+    }
+
     void UpdateIndex(int newIndex)
     {
         if (dialogueNodes[index].nextNodes.Count == 0) // if there is no next node, which means it's the last of the scenario
@@ -188,6 +208,17 @@ public class DialogueManager : MonoBehaviour
     {
 
     }
+
+    void StopDialogueCoroutine()
+    {
+        if (dialogueCoroutine != null)
+        {
+            StopCoroutine(dialogueCoroutine);
+
+            if (verbose)
+                Debug.Log("Stop coroutine");
+        }
+    }
     void PlayAudioClip()
     {
         if (dialogueNodes[index].clip == null)
@@ -200,18 +231,10 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    private void DisplayDialogueButton()
+    private void NextDialogueButton()
     {
         inCouroutine = false;
-
-        if (dialogueCoroutine != null)
-        {
-           StopCoroutine(dialogueCoroutine);
-
-            if(verbose)
-                Debug.Log("Stop coroutine");
-        }
-
+        StopDialogueCoroutine();
         CancelInvoke(nameof(TriggerAudioFinished));
         onTalkFinished?.Invoke();
         onSkipDialogueNode?.Invoke();

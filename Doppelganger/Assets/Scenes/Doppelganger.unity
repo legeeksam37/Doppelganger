@@ -3904,6 +3904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 282590746}
+  doppelgangerHeadTextUI: {fileID: 2010063044}
   d_manager: {fileID: 940650911}
   muteSprite: {fileID: 21300000, guid: 9f2c60c030deaa5418de1c3c06892c44, type: 3}
   unMuteSprite: {fileID: 21300000, guid: 922a0e89e66e8144f95bbe74f651a0b4, type: 3}
@@ -4082,6 +4083,17 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: e8edee02d65594f42b9c1ae5caf4cf86, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &2010063044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2089561033771894128, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+  m_PrefabInstance: {fileID: 332653131523193199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2091713809
 GameObject:
   m_ObjectHideFlags: 0
@@ -4326,8 +4338,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 968417869394067707, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.4989
+      objectReference: {fileID: 0}
+    - target: {fileID: 968417869394067707, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1106148504278761448, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_BaseOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2089561033771894128, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_text
+      value: Restart the Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2583223112269647434, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3350005760259177427, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
@@ -4378,6 +4406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Doppelganger
       objectReference: {fileID: 0}
+    - target: {fileID: 6505606697816425635, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_Name
+      value: DoppelgangerText
+      objectReference: {fileID: 0}
     - target: {fileID: 6707789759288841705, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: dest
       value: 
@@ -4386,6 +4418,10 @@ PrefabInstance:
       propertyPath: playerRig
       value: 
       objectReference: {fileID: 1077632224}
+    - target: {fileID: 6707789759288841705, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 1795838139}
     - target: {fileID: 6707789759288841705, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: dialogueManager
       value: 
