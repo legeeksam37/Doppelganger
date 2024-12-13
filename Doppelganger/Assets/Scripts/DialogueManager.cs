@@ -34,7 +34,6 @@ public class DialogueManager : MonoBehaviour
     List<Node> interactionsDialogueNodes = new List<Node>();
     Coroutine dialogueCoroutine;
 
-
     void Start()
     {
         if (avatar == null)
@@ -140,7 +139,6 @@ public class DialogueManager : MonoBehaviour
 
         for (int j = 0; j <= dialogueNodes[index].nextNodes.Count - 1; j++)
         {
-            Debug.Log("Skip 2");
             nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
             nextNodesList.Add(nextNode);
             

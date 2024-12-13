@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] TextMeshProUGUI doppelgangerHeadTextUI;
+    [SerializeField] TextMeshProUGUI tVScreenLabelTextUI;
     [SerializeField] DialogueManager d_manager;
     [SerializeField] Sprite muteSprite;
     [SerializeField] Sprite unMuteSprite;
@@ -76,6 +77,12 @@ public class UIManager : MonoBehaviour
     {
         doppelgangerHeadTextUI.text = headText;
     }
+
+    public void SetTVScreenLabelText(string labelText)
+    {
+        tVScreenLabelTextUI.text = labelText;
+    }
+
     void InstanciateCarouselIndicator()
     {
         GameObject carouselIndicator;

@@ -8,10 +8,11 @@ public class AvatarManager : MonoBehaviour
     [SerializeField] Transform dest;
     [SerializeField] DialogueManager dialogueManager;
     [SerializeField] UIManager uiManager;
+    [SerializeField] TVScreen tvScreen;
     [SerializeField] float speed;
     [SerializeField] float rotSpeed;
     [SerializeField] Transform playerRig;
-    [SerializeField] bool isPresenting;
+    [SerializeField] bool verbose;
 
     public Action onTargetReached;
 
@@ -23,6 +24,8 @@ public class AvatarManager : MonoBehaviour
     float dist = 0;
     bool hasReachedtTarget;
     bool isMouseOver = false;
+    bool isPresenting;
+    bool canInteract;
     private void OnEnable()
     {
         animator = GetComponent<Animator>();
@@ -32,16 +35,32 @@ public class AvatarManager : MonoBehaviour
             Debug.LogError(TAG+" No Head text at position 0 as child object !");
 
         dialogueManager.onSkipDialogueNode += CheckAnimSate;
+        tvScreen.onClickZoomIn += StopInteraction;
+        tvScreen.onClickZoomOut += ResumeInteraction;
     }
 
     void OnDisable()
     {
         dialogueManager.onSkipDialogueNode -= CheckAnimSate;
+        tvScreen.onClickZoomIn -= StopInteraction;
+        tvScreen.onClickZoomOut -= ResumeInteraction;
+    }
+
+    void StopInteraction()
+    {
+        canInteract = false;
+    }
+
+    void ResumeInteraction()
+    {
+        canInteract = true;
     }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         outlineEffect = GetComponent<Outline>();
+
+        canInteract = true;
 
         if (outlineEffect == null)
         {
@@ -58,8 +77,6 @@ public class AvatarManager : MonoBehaviour
     bool state;
     void Update()
     {
-        Debug.Log(TAG+" In dialogue: " + dialogueManager.EndReached());
-
         dist = Vector3.Distance(transform.position, dest.position);
 
         if (dist <= 0.5f)
@@ -78,7 +95,9 @@ public class AvatarManager : MonoBehaviour
 
         if (isMouseOver && Input.GetMouseButtonDown(0))
         {
-            Debug.Log(TAG + " Clicked on avatar");
+            if (verbose)
+                Debug.Log(TAG + " Clicked on avatar");
+
             if (dialogueManager.EndReached())
             {
                 dialogueManager.RestartDialogue();
@@ -131,8 +150,18 @@ public class AvatarManager : MonoBehaviour
         SetWalkAnim(true);
     }
 
+    public bool IsPresenting()
+    {
+        return isPresenting;
+    }
+
     private void OnMouseEnter()
     {        
+        if (!canInteract)
+        {
+            return;
+        }
+
         if (isPresenting)
         {
             outlineEffect.enabled = true;
@@ -157,6 +186,11 @@ public class AvatarManager : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (!canInteract)
+        {
+            return;
+        }
+
         if (isPresenting)
         {
             outlineEffect.enabled = false;
