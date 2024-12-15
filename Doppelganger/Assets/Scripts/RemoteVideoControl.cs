@@ -55,7 +55,7 @@ public class RemoteVideoControl : MonoBehaviour
 
     void PlayFromUrl()
     {
-        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, mediaContents[index].videoName);
+        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath + "/videos/" + mediaContents[index].videoName);
 
         if (verbose)
             Debug.Log(videoPath);

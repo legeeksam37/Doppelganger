@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.Android;
 
 public class TestFunction : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class TestFunction : MonoBehaviour
         graphicElement = GetComponent<Graphic>();
     }
 
+    public void DownloadFile()
+    {
+        Application.OpenURL(Application.streamingAssetsPath + "/files/CV_Sami_YAHYA_BEY.pdf");
+    }
 
     private void Update()
     {
