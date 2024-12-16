@@ -6,17 +6,16 @@ using DG.Tweening;
 public class Scaler : MonoBehaviour
 {
     [SerializeField] float duration = 1f;
-    Vector3 refScale;
+    [SerializeField] float enableSscale = 1f;
+    [SerializeField] float diableScale = 0.5f;
 
-
-    private void Awake()
+    private void OnEnable()
     {
-        refScale = transform.localScale;
-        transform.DOScale(Vector3.one,duration);
+        transform.DOScale(enableSscale, duration);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        transform.DOScale(refScale, duration);
+        transform.localScale = new Vector3(diableScale, diableScale, diableScale);
     }
 }

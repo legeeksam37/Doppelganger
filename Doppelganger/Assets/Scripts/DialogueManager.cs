@@ -7,10 +7,10 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] bool verbose;
+    [SerializeField] GameObject dialogueBtn;
     [SerializeField] UIManager uiManager;
     [SerializeField] AudioSource audioSource;
     [SerializeField] GameObject canvasParent;
-    [SerializeField] GameObject buttonDialoguePrefab;
     [SerializeField] AvatarManager avatar;
     [SerializeField] SoundManager soundManager;
 
@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour
     {
         index = 0;
         endReached = false;
-        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueBtn.SetActive(true);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[0].dialogueText;
     }
@@ -202,11 +202,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void InstanciateDialogueButton()
-    {
-
-    }
-
     void StopDialogueCoroutine()
     {
         if (dialogueCoroutine != null)
@@ -236,7 +231,7 @@ public class DialogueManager : MonoBehaviour
         CancelInvoke(nameof(TriggerAudioFinished));
         onTalkFinished?.Invoke();
         onSkipDialogueNode?.Invoke();
-        GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+        dialogueBtn.SetActive(true);
         dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
@@ -249,7 +244,7 @@ public class DialogueManager : MonoBehaviour
         if (inCouroutine)
         {
             UpdateIndex(newIndex);
-            GameObject dialogueBtn = Instantiate(buttonDialoguePrefab, canvasParent.transform);
+            dialogueBtn.SetActive(true);
             dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
             dialogueButtonText.text = dialogueNodes[index].dialogueText;
         }
@@ -318,11 +313,9 @@ public class DialogueManager : MonoBehaviour
 
     void CheckAndClearButtons()
     {
-        NodeButton[] allButtons = FindObjectsOfType<NodeButton>();
-
-        foreach (NodeButton button in allButtons)
+        if (dialogueBtn.activeSelf)
         {
-            Destroy(button.gameObject);
+            dialogueBtn.SetActive(false); 
         }
     }
 
