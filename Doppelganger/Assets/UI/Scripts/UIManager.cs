@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.Device;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,22 +14,26 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite muteSprite;
     [SerializeField] Sprite unMuteSprite;
     [SerializeField] Button muteButton;
-    [SerializeField] GameObject doppelgangerTextCanvas;
+    [SerializeField] GameObject dialogueElements;
     [SerializeField] TextMeshProUGUI doppelgangerText;
     [SerializeField] GameObject remote;
     [SerializeField] GameObject videoDesc;
     [SerializeField] RemoteVideoControl remoteControl;
     [SerializeField] GameObject carouselIndicatorPrefab;
     [SerializeField] Transform carouselIndicatorParent;
+    [SerializeField] TVScreen tVScreen;
 
-    int nbreOfVideos;
     [SerializeField]  List<GameObject> carouselIndicatorsLst = new List<GameObject>();
     [SerializeField]  List<Graphic> carouselIndicatorGraphE = new List<Graphic>();
+
+    int nbreOfVideos;
 
     void OnEnable()
     {
         d_manager.onTextChnaged += SetText;
-        d_manager.onLastNodeReached += HideSubTextUI;
+        d_manager.onLastNodeReached += HideDialogueUI;
+        tVScreen.onClickZoomIn += HideDialogueUI;
+        tVScreen.onClickZoomOut += ShowDialogueUI;
         remoteControl.onVideoPlayed += UpdateUI;
 
     }
@@ -36,7 +41,9 @@ public class UIManager : MonoBehaviour
     void OnDisable()
     {
         d_manager.onTextChnaged -= SetText;
-        d_manager.onLastNodeReached += HideSubTextUI;
+        d_manager.onLastNodeReached -= HideDialogueUI;
+        tVScreen.onClickZoomIn -= HideDialogueUI;
+        tVScreen.onClickZoomOut -= ShowDialogueUI;
         remoteControl.onVideoPlayed -= UpdateUI;
     }
 
@@ -58,14 +65,17 @@ public class UIManager : MonoBehaviour
         videoDesc.SetActive(true);
     }
 
-    public void HideSubTextUI()
+    public void HideDialogueUI()
     {
-        doppelgangerTextCanvas.SetActive(false);
+        dialogueElements.SetActive(false);
     }
 
-    public void ShowSubTitles()
+    public void ShowDialogueUI()
     {
-        doppelgangerTextCanvas.SetActive(true);
+        if (d_manager.IsInDialogue())
+            dialogueElements.SetActive(true);
+        else
+            Debug.Log("No Ui because not in dialogue");
     }
 
     public void ClearSubtitles()

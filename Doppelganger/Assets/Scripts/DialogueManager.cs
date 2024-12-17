@@ -36,6 +36,16 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        if (dialogueBtn != null)
+        {
+            dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        else
+        {
+            Debug.LogError("Dialogue button is null");
+        }
+       
+
         if (avatar == null)
         {
             Debug.LogError("Avatar is null");
@@ -45,6 +55,16 @@ public class DialogueManager : MonoBehaviour
         index = 0;
         avatar.Wave();
         RunFistNode();
+    }
+
+    private void Update()
+    {
+        Debug.Log(TAG+" In dialogue : " + inDialogue);
+    }
+
+    public bool IsInDialogue()
+    {
+        return inDialogue;
     }
 
     void OnDisable()
@@ -58,9 +78,9 @@ public class DialogueManager : MonoBehaviour
     void RunFistNode()
     {
         index = 0;
+        inDialogue = true;
         endReached = false;
         dialogueBtn.SetActive(true);
-        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[0].dialogueText;
     }
 
@@ -72,10 +92,11 @@ public class DialogueManager : MonoBehaviour
     public void RestartDialogue()
     {
         CheckAndClearButtons();
-        uiManager.ClearSubtitles();
-        uiManager.ShowSubTitles();
-        endReached = false;
         RunFistNode();
+        uiManager.ClearSubtitles();
+        uiManager.ShowDialogueUI();
+        endReached = false;
+
     }
 
     public void RunDialogueNodes(string name = null)
@@ -128,6 +149,7 @@ public class DialogueManager : MonoBehaviour
 
             CheckAndClearButtons();
             inCouroutine = false;
+            inDialogue = false;
             endReached = true;
             uiManager.ClearSubtitles();
             onLastNodeReached?.Invoke();
@@ -175,6 +197,7 @@ public class DialogueManager : MonoBehaviour
 
    public void CancelDialogue()
     {
+        inDialogue = false;
         endReached = true;
         StopDialogueCoroutine();
         CheckAndClearButtons();
@@ -232,7 +255,6 @@ public class DialogueManager : MonoBehaviour
         onTalkFinished?.Invoke();
         onSkipDialogueNode?.Invoke();
         dialogueBtn.SetActive(true);
-        dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
         dialogueButtonText.text = dialogueNodes[index].dialogueText;
     }
 
@@ -245,7 +267,6 @@ public class DialogueManager : MonoBehaviour
         {
             UpdateIndex(newIndex);
             dialogueBtn.SetActive(true);
-            dialogueButtonText = dialogueBtn.GetComponentInChildren<TextMeshProUGUI>();
             dialogueButtonText.text = dialogueNodes[index].dialogueText;
         }
         else
