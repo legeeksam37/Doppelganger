@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   dialogueText: Can you introduce your self ?
-  dialogueContent: Hello, my name is Sami, I am a junior software engineer specialized
-    in the development of immersive applications. My expertise lies in Unity, 3D
-    rendering engines, where I have developed and deployed various projects from
-    scratch across multiples platforms like like WebGL, Android, and VR (Oculus Quest,
-    HTC Vive).
-  clip: {fileID: 8300000, guid: 41853244d26059e4baae5b0e542cf914, type: 3}
+  dialogueContent: Sure ! My name is Sami, I am a junior software engineer specialized
+    in the development of immersive applications working with Unity and 3D rendering
+    engines, where I developed and deployed various projects from scratch across
+    multiples platforms like WebGL, Android, and VR (Oculus Quest, HTC Vive)
+  clip: {fileID: 8300000, guid: e3fff17fc2bdff342b7c8472dfa58d9c, type: 3}
   nextNodes: 02000000
   hasInteraction: 0

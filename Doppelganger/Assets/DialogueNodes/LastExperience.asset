@@ -20,6 +20,6 @@ MonoBehaviour:
     to diverse platforms, including VR headsets, WebGL, and mobile devices. My role
     also involved refining application performance, ensuring cross-platform compatibility,
     and optimizing for different user experiences.
-  clip: {fileID: 8300000, guid: 9ce03dd8a13d2cc42969b26a0bda317f, type: 3}
+  clip: {fileID: 8300000, guid: fa38728d041864a4f9e422ec0ab673bb, type: 3}
   nextNodes: 05000000
   hasInteraction: 0

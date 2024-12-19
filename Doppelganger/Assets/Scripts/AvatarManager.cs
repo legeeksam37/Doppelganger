@@ -78,18 +78,19 @@ public class AvatarManager : MonoBehaviour
     void Update()
     {
         dist = Vector3.Distance(transform.position, dest.position);
+        Debug.Log("Distance : " + dist);
 
-        if (dist <= 0.5f)
+        if (dist <= 0.2f)
         {
-            agent.isStopped = true;
             LookAtTarget();
+            agent.isStopped = true;
+            SetWalkAnim(false);
 
             if (!hasReachedtTarget)
             {
                 onTargetReached?.Invoke();
                 hasReachedtTarget = true;
                 isPresenting = true;
-                SetWalkAnim(false);
             }
         }
 

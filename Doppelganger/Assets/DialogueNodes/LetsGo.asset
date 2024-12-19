@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   dialogueText: 'Can you show me a demonstration of some of projects ? '
-  dialogueContent: Sure ! Here they are.
-  clip: {fileID: 8300000, guid: e1a381764660a724f8abc78ab436b6c7, type: 3}
+  dialogueContent: Sure, take a look on the TV ! Also use the next and previous buttons
+    of the remote at the bottom left, to switch between the different projects.
+  clip: {fileID: 8300000, guid: 16eeba5b183fb26469888ab857257f18, type: 3}
   nextNodes: 
   hasInteraction: 1
