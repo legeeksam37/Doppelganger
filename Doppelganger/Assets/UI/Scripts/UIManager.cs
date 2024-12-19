@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
         if (d_manager.IsInDialogue())
             dialogueElements.SetActive(true);
         else
-            Debug.Log("No Ui because not in dialogue");
+            Debug.Log("Display Cv and linkedin");
     }
 
     public void ClearSubtitles()
