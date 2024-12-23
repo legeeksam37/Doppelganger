@@ -7,9 +7,9 @@ public class WebGLOpenLinks : MonoBehaviour
     public static void OpenURL()
     {
         #if UNITY_WEBGL && !UNITY_EDITOR
-            OpenTab("https://www.linkedin.com");
+            OpenTab("https://fr.linkedin.com/in/sami-yayb");
         #else
-            Debug.Log("WebGL only: Opening https://www.linkedin.com");
+            Debug.Log("WebGL only");
         #endif
     }
 

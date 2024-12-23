@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   title: Lab Learner
-  description: 
+  description: LabLearner, developed by Manzavision using Unity, is a tool for creating
+    VR training applications. It guides users through professional scenarios and
+    evaluates their performance with metrics like errors, execution time, and precision.
+    This feedback helps users improve continuously. My role was to upgrade the engine,
+    add features, and ensure cross-platform compatibility with new devices. These
+    slides outline the technical details and tools used.
   videoName: sanofi-compacteur.mp4

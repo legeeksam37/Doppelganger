@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   title: Replica
-  description: 
+  description: Replica, developed by Manzalab, is an engine designed to simulate
+    realistic interactions with professionals. Users engage in scenarios where they
+    choose appropriate responses, and the professional avatar reacts dynamically
+    to enhance realism. After each scenario, users receive feedback highlighting
+    strengths and areas for improvement to refine their approach. My role was to
+    upgrade the engine, add features, and ensure compatibility with WebGL and VR
+    across all devices, enabling cross-platform functionality.
   videoName: Replica.mp4
