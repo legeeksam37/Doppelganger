@@ -3159,7 +3159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: mediaContents.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: mediaContents.Array.data[0]
@@ -3177,6 +3177,14 @@ PrefabInstance:
       propertyPath: mediaContents.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: b7b2f9f563f17c845ba57abb27d6cf35, type: 2}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: mediaContents.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2797448ef5fde87429d4f2f1f8c730e6, type: 2}
+    - target: {fileID: 5927072622095649616, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
+      propertyPath: mediaContents.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: ad8156c950892ca4495585f2bfc4034d, type: 2}
     - target: {fileID: 6476255049017615604, guid: 0775dd55e3945164f988c81e58f9095b, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -5419,6 +5427,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1784628673459249067, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4104656639640713735, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.2
@@ -5463,6 +5475,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Doppelganger
       objectReference: {fileID: 0}
+    - target: {fileID: 6130846323407688646, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535026000406688931, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6707789759288841705, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: dest
       value: 
@@ -5483,6 +5503,10 @@ PrefabInstance:
       propertyPath: dialogueManager
       value: 
       objectReference: {fileID: 940650911}
+    - target: {fileID: 7077067097938480016, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7847330215174560693, guid: 12ba4173351c1c646a71b7b9bdb27192, type: 3}
       propertyPath: d_manager
       value: 

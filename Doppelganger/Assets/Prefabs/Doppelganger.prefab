@@ -1804,10 +1804,11 @@ MonoBehaviour:
   dest: {fileID: 0}
   dialogueManager: {fileID: 0}
   uiManager: {fileID: 0}
+  tvScreen: {fileID: 0}
   speed: 1
   rotSpeed: 10
   playerRig: {fileID: 0}
-  isPresenting: 0
+  verbose: 0
 --- !u!114 &7701728549093703062
 MonoBehaviour:
   m_ObjectHideFlags: 0
