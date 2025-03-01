@@ -47,7 +47,7 @@ public class RemoteVideoControl : MonoBehaviour
                 Debug.Log("Media content id :" + mediaContents[i].id);
                 Debug.Log("Media content title :" + mediaContents[i].title);
                 Debug.Log("Media content description :" + mediaContents[i].description);
-                Debug.Log("Media content video url :" + mediaContents[i].videoName);
+                Debug.Log("Media content video url :" + mediaContents[i].url);
             }
         }
 
@@ -55,12 +55,12 @@ public class RemoteVideoControl : MonoBehaviour
 
     void PlayFromUrl()
     {
-        string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath + "/videos/" + mediaContents[index].videoName);
+        string videoUrl = mediaContents[index].url;
 
         if (verbose)
-            Debug.Log(videoPath);
+            Debug.Log(videoUrl);
 
-        videoPlayer.url = videoPath;
+        videoPlayer.url = videoUrl;
         videoPlayer.Play();
         DisplayText();
     }

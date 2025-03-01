@@ -6,5 +6,5 @@ public class MediaContent : ScriptableObject
     public int id;
     public string title;  
     public string description;
-    public string videoName;
+    public string url;
 }

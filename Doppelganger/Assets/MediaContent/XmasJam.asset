@@ -19,4 +19,4 @@ MonoBehaviour:
     with random point values. At the end of the time limit, the player with the highest
     score wins.  Technical details: The project focuses on multiplayer implementation
     and RPC (Remote Procedure Calls).'
-  videoName: projet1.mp4
+  url: https://legeeksam37.github.io/VideoHost/XmasJam.mp4
