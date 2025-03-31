@@ -78,7 +78,9 @@ public class AvatarManager : MonoBehaviour
     void Update()
     {
         dist = Vector3.Distance(transform.position, dest.position);
-        Debug.Log("Distance : " + dist);
+
+        if (verbose)
+            Debug.Log("Distance : " + dist);
 
         if (dist <= 0.2f)
         {

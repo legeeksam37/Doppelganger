@@ -57,11 +57,6 @@ public class DialogueManager : MonoBehaviour
         RunFistNode();
     }
 
-    private void Update()
-    {
-        Debug.Log(TAG+" In dialogue : " + inDialogue);
-    }
-
     public bool IsInDialogue()
     {
         return inDialogue;
@@ -163,6 +158,9 @@ public class DialogueManager : MonoBehaviour
         {
             nextNode = GetNodeById(dialogueNodes[index].nextNodes[j]);
             nextNodesList.Add(nextNode);
+            
+            if (verbose)
+                Debug.Log("Next node :"+nextNode.name);
             
 
             if (name == "skip")
